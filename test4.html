@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Birthday Club Signup</title>
+  </head>
+
+  <body>
+    <!--
+      PURPOSE:
+      - A single, no-CSS baseline page that:
+        1) Reads ?b=BUSINESS_ID from the URL
+        2) Fetches business offer info from Pipedream
+        3) Shows business name/logo/offer at the top so customers can verify they’re signing up for the right business
+        4) Embeds the Jotform in one of three ways (direct link, jsform, iframe)
+
+      REQUIRED URL PARAM:
+        /signup?b=123
+
+      NOTE:
+      - Replace PD_GET_BUSINESS_URL with your real endpoint.
+      - This assumes your Pipedream endpoint returns JSON like:
+        {
+          "status":"active",
+          "business_name":"Test Business",
+          "logo_url":"",
+          "offer_title":"Free birthday item",
+          "offer_description":"Show this message in-store.",
+          "offer_image_url":"",
+          "fine_print":"Valid 7 days."
+        }
+
+      JOTFORM PREFILL:
+      - If you want Jotform to receive the business id, add hidden fields in Jotform:
+          bid  (business id)
+          source
+      - This page will append ?bid=...&source=... to direct link + iframe, and for jsform it appends to the script src.
+    -->
+
+    <!-- Business verification section -->
+    <div id="biz">
+      <h1 id="biz_name">Loading business...</h1>
+      <div>
+        <img id="biz_logo" alt="Business logo" />
+      </div>
+      <h2 id="offer_title"></h2>
+      <p id="offer_desc"></p>
+      <div>
+        <img id="offer_img" alt="Offer image" />
+      </div>
+      <p id="fine_print"></p>
+      <div id="biz_note"></div>
+      <hr />
+    </div>
+
+    <!-- Choose ONE embed method below by setting EMBED_MODE:
+         "direct" | "jsform" | "iframe"
+    -->
+    <div id="form_area"></div>
+
+    <script>
+      // ===================== CONFIG =====================
+      // Pipedream endpoint that returns business info as JSON.
+      // Example: https://YOUR-ENDPOINT/get-business?b=123
+      const PD_GET_BUSINESS_URL = "https://eompxe9l4vf4e3z.m.pipedream.net/get-business";
+
+      // Jotform direct link (as provided)
+      const JOTFORM_DIRECT_URL = "https://form.jotform.com/mpgreco6/customer-birthday-club-signup";
+
+      // Jotform jsform embed (as provided)
+      const JOTFORM_JSFORM_SCRIPT = "https://form.jotform.com/jsform/260478526701055";
+
+      // Jotform iframe id (as provided)
+      const JOTFORM_IFRAME_ID = "JotFormIFrame-260478526701055";
+
+      // Which embed mode to use:
+      // "direct" shows a link button (most reliable mobile)
+      // "jsform" uses <script src=".../jsform/...">
+      // "iframe" uses iframe + jotformEmbedHandler
+      const EMBED_MODE = "iframe";
+
+      // Jotform hidden field unique names (change if yours differ)
+      const JOTFORM_BID_FIELD = "bid";
+      const JOTFORM_SOURCE_FIELD = "source";
+      // ==================================================
+
+      function qs(name) {
+        return new URLSearchParams(window.location.search).get(name);
+      }
+
+      function setText(id, text) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text || "";
+      }
+
+      function setImg(id, url) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (url) {
+          el.src = url;
+          el.style.display = "";
+        } else {
+          el.removeAttribute("src");
+          el.style.display = "none";
+        }
+      }
+
+      function setNote(msg) {
+        const el = document.getElementById("biz_note");
+        if (!el) return;
+        el.textContent = msg || "";
+      }
+
+      async function loadBusiness(businessId) {
+        const res = await fetch(PD_GET_BUSINESS_URL + "?b=" + encodeURIComponent(businessId), { cache: "no-store" });
+        const txt = await res.text();
+        if (!res.ok) throw new Error("Business lookup f
