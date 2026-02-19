@@ -1,29 +1,124 @@
-<div id="jf-wrap"></div>
+<div id="bc-wrap" style="max-width:820px;margin:0 auto;">
+  <div id="bc-note" style="display:none;background:#fff7ed;border:1px solid #fed7aa;padding:12px;border-radius:10px;margin-bottom:12px;"></div>
+
+  <div style="border:1px solid #e5e7eb;border-radius:14px;padding:18px;margin-bottom:16px;">
+    <div style="display:flex;gap:14px;align-items:center;">
+      <img id="bc-logo" alt="" style="display:none;max-height:56px;max-width:220px;" />
+      <h1 id="bc-business" style="margin:0;">Loading…</h1>
+    </div>
+
+    <h2 id="bc-title" style="margin:12px 0 6px 0;"></h2>
+    <p id="bc-desc" style="margin:0;white-space:pre-wrap;"></p>
+
+    <img id="bc-image" alt="" style="display:none;width:100%;max-height:340px;object-fit:cover;border-radius:12px;margin-top:12px;" />
+
+    <div id="bc-fine" style="font-size:12px;color:#4b5563;margin-top:12px;white-space:pre-wrap;"></div>
+  </div>
+
+  <!-- Jotform embed -->
+  <div id="jf-wrap"></div>
+</div>
 
 <script>
-  // EDIT if your hidden field unique names differ
+  // ========= EDIT THESE =========
+  const PD_GET_BUSINESS_URL = "https://YOUR-PIPEDREAM-ENDPOINT/get-business"; // must return JSON
   const JOTFORM_FORM_ID = "260478526701055";
-  const JOTFORM_BUSINESS_ID_FIELD = "bid";
-  const JOTFORM_SOURCE_FIELD = "source";
+  const JOTFORM_BUSINESS_ID_FIELD = "bid";     // your hidden field unique name
+  const JOTFORM_SOURCE_FIELD = "source";       // your hidden field unique name
+  // ==============================
 
   function qs(name) {
     return new URLSearchParams(window.location.search).get(name);
   }
+  function showNote(msg) {
+    const el = document.getElementById("bc-note");
+    el.style.display = "block";
+    el.textContent = msg;
+  }
 
-  (function () {
-    const businessId = qs("b") || "";
+  function setText(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text || "";
+  }
+
+  function setImg(id, url) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (url) {
+      el.src = url;
+      el.style.display = "block";
+    } else {
+      el.style.display = "none";
+    }
+  }
+
+  async function loadBusiness(businessId) {
+    const res = await fetch(PD_GET_BUSINESS_URL + "?b=" + encodeURIComponent(businessId), { cache: "no-store" });
+
+    // Helpful errors instead of silent failure
+    if (!res.ok) {
+      const t = await res.text().catch(() => "");
+      throw new Error("Business lookup failed (HTTP " + res.status + "). " + (t ? ("Body: " + t.slice(0,120)) : ""));
+    }
+
+    // Guard against HTML / non-JSON responses
+    const txt = await res.text();
+    let cfg;
+    try { cfg = JSON.parse(txt); }
+    catch { throw new Error("Endpoint did not return JSON. First 80 chars: " + txt.slice(0,80)); }
+
+    return cfg;
+  }
+
+  function embedJotform(businessId) {
     const source = window.location.href;
 
-    // Build the jsform script URL with prefill values
     const s = document.createElement("script");
     s.type = "text/javascript";
 
-    // Jotform prefill is done by adding params on the jsform URL
-    const src = new URL(`https://form.jotform.com/jsform/${JOTFORM_FORM_ID}`);
+    const src = new URL("https://form.jotform.com/jsform/" + JOTFORM_FORM_ID);
     if (businessId) src.searchParams.set(JOTFORM_BUSINESS_ID_FIELD, businessId);
     src.searchParams.set(JOTFORM_SOURCE_FIELD, source);
 
     s.src = src.toString();
     document.getElementById("jf-wrap").appendChild(s);
+  }
+
+  (async function init() {
+    const businessId = qs("b") || "";
+
+    if (!businessId) {
+      setText("bc-business", "Missing business ID");
+      showNote("Use: /signup?b=YOUR_BUSINESS_ID");
+      // Still embed form without a bid (optional)
+      embedJotform("");
+      return;
+    }
+
+    // Always embed the form (even if offer lookup fails)
+    embedJotform(businessId);
+
+    try {
+      const cfg = await loadBusiness(businessId);
+
+      // Status handling
+      if (cfg.status && cfg.status !== "active") {
+        showNote("This birthday club is currently unavailable.");
+      }
+
+      // Render business/offer info
+      setText("bc-business", (cfg.business_name || "Birthday Club") + " Birthday Club");
+      setImg("bc-logo", cfg.logo_url);
+
+      setText("bc-title", cfg.offer_title || "");
+      setText("bc-desc", cfg.offer_description || "");
+      setImg("bc-image", cfg.offer_image_url);
+
+      setText("bc-fine", cfg.fine_print || "");
+    } catch (e) {
+      console.error(e);
+      setText("bc-business", "Birthday Club");
+      showNote(e.message || "We couldn't load this business's offer. Please try again later.");
+    }
   })();
 </script>
