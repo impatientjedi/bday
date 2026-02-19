@@ -1,0 +1,121 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+
+type BusinessPublicConfig = {
+  business_name: string;
+  logo_url?: string;
+  offer_title?: string;
+  offer_description?: string;
+  offer_image_url?: string;
+  fine_print?: string;
+  status?: "active" | "paused" | "canceled";
+};
+
+export default function SignupPage() {
+  const [cfg, setCfg] = useState<BusinessPublicConfig | null>(null);
+  const [err, setErr] = useState<string | null>(null);
+
+  const businessId = useMemo(() => {
+    if (typeof window === "undefined") return null;
+    return new URLSearchParams(window.location.search).get("b");
+  }, []);
+
+  const source = useMemo(() => {
+    if (typeof window === "undefined") return "";
+    return window.location.href;
+  }, []);
+
+  // ✅ Jotform hidden field unique names (change only if yours differ)
+  const JOTFORM_BUSINESS_ID_FIELD = "business_id";
+  const JOTFORM_SOURCE_FIELD = "source";
+
+  const jotformUrl = useMemo(() => {
+    const base = process.env.NEXT_PUBLIC_JOTFORM_CUSTOMER_FORM_URL!;
+    if (!businessId) return base;
+    const u = new URL(base);
+    u.searchParams.set(JOTFORM_BUSINESS_ID_FIELD, businessId);
+    u.searchParams.set(JOTFORM_SOURCE_FIELD, source);
+    return u.toString();
+  }, [businessId, source]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        if (!businessId) {
+          setErr("Missing business id. Use /signup?b=YOUR_BUSINESS_ID");
+          return;
+        }
+        const endpoint = process.env.NEXT_PUBLIC_PD_GET_BUSINESS_URL!;
+        const res = await fetch(`${endpoint}?b=${encodeURIComponent(businessId)}`, { cache: "no-store" });
+        if (!res.ok) throw new Error(`Load failed (${res.status})`);
+        const data = (await res.json()) as BusinessPublicConfig;
+        if (data?.status && data.status !== "active") {
+          setErr("This birthday club is currently unavailable.");
+        }
+        setCfg(data);
+      } catch (e: any) {
+        setErr(e?.message || "Error loading business.");
+      }
+    })();
+  }, [businessId]);
+
+  return (
+    <main style={{ maxWidth: 820, margin: "0 auto", padding: 24, fontFamily: "system-ui" }}>
+      <div style={{ border: "1px solid #e5e7eb", borderRadius: 14, padding: 18 }}>
+        {err && (
+          <div style={{ background: "#fff7ed", border: "1px solid #fed7aa", padding: 12, borderRadius: 10 }}>
+            <strong>Note:</strong> {err}
+          </div>
+        )}
+
+        <header style={{ display: "flex", gap: 14, alignItems: "center", marginTop: 12 }}>
+          {cfg?.logo_url ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={cfg.logo_url} alt="" style={{ maxHeight: 56, maxWidth: 220 }} />
+          ) : null}
+          <h1 style={{ margin: 0 }}>
+            {cfg?.business_name ? `${cfg.business_name} Birthday Club` : "Birthday Club"}
+          </h1>
+        </header>
+
+        <section style={{ marginTop: 10 }}>
+          <h2 style={{ marginBottom: 6 }}>{cfg?.offer_title || ""}</h2>
+          <p style={{ marginTop: 0, whiteSpace: "pre-wrap" }}>{cfg?.offer_description || ""}</p>
+
+          {cfg?.offer_image_url ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={cfg.offer_image_url}
+              alt=""
+              style={{
+                width: "100%",
+                maxHeight: 340,
+                objectFit: "cover",
+                borderRadius: 12,
+                marginTop: 10,
+              }}
+            />
+          ) : null}
+
+          {cfg?.fine_print ? (
+            <p style={{ fontSize: 12, color: "#4b5563", whiteSpace: "pre-wrap", marginTop: 12 }}>
+              {cfg.fine_print}
+            </p>
+          ) : null}
+        </section>
+
+        <hr style={{ margin: "18px 0", border: "none", borderTop: "1px solid #e5e7eb" }} />
+
+        <section>
+          <h3 style={{ marginTop: 0 }}>Sign up</h3>
+          <iframe
+            title="Birthday Club Signup"
+            src={jotformUrl}
+            style={{ width: "100%", height: 720, border: "none" }}
+          />
+        </section>
+      </div>
+    </main>
+  );
+}
