@@ -1,73 +1,98 @@
 <style>
   :root{
-    /* Subtle, colorful palette */
-    --bg1:#f6f7ff;
-    --bg2:#f2fbff;
-    --card:#ffffff;
-    --border:#e6e8f5;
-    --text:#111827;
-    --muted:#6b7280;
-
-    /* Accent */
-    --accent:#6d5efc;      /* violet */
-    --accent2:#22c3ee;     /* cyan */
-    --accent3:#34d399;     /* green */
-
-    /* Shadows */
+    --bg1:#f6f7ff; --bg2:#f2fbff;
+    --card:#ffffff; --border:#e6e8f5;
+    --text:#111827; --muted:#6b7280;
+    --accent:#6d5efc; --accent2:#22c3ee; --accent3:#34d399;
     --shadow: 0 10px 30px rgba(17,24,39,0.08);
     --shadow2: 0 6px 18px rgba(17,24,39,0.06);
-
     --radius:16px;
   }
 
   html, body{
-  margin:0;
-  padding:0;
-  color:var(--text);
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    margin:0; padding:0; color:var(--text);
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background:
+      radial-gradient(circle at 18px 22px, rgba(109,94,252,0.28) 2.6px, transparent 3.2px) 0 0/120px 120px,
+      radial-gradient(circle at 86px 62px, rgba(34,195,238,0.28) 2.6px, transparent 3.2px) 0 0/140px 140px,
+      radial-gradient(circle at 52px 104px, rgba(52,211,153,0.26) 2.6px, transparent 3.2px) 0 0/160px 160px,
+      radial-gradient(circle at 112px 36px, rgba(245,158,11,0.24) 2.6px, transparent 3.2px) 0 0/180px 180px,
+      radial-gradient(circle at 34px 142px, rgba(236,72,153,0.22) 2.6px, transparent 3.2px) 0 0/200px 200px,
+      radial-gradient(900px 520px at 18% -10%, rgba(109,94,252,0.22), rgba(0,0,0,0) 62%),
+      radial-gradient(900px 520px at 92% 8%, rgba(34,195,238,0.22), rgba(0,0,0,0) 62%),
+      radial-gradient(800px 520px at 55% 115%, rgba(52,211,153,0.12), rgba(0,0,0,0) 60%),
+      linear-gradient(180deg, var(--bg1), var(--bg2));
+  }
 
-  background:
-    /* bright confetti dots (primary) */
-    radial-gradient(circle at 18px 22px, rgba(109,94,252,0.28) 2.6px, transparent 3.2px) 0 0/120px 120px,
-    radial-gradient(circle at 86px 62px, rgba(34,195,238,0.28) 2.6px, transparent 3.2px) 0 0/140px 140px,
-    radial-gradient(circle at 52px 104px, rgba(52,211,153,0.26) 2.6px, transparent 3.2px) 0 0/160px 160px,
-    radial-gradient(circle at 112px 36px, rgba(245,158,11,0.24) 2.6px, transparent 3.2px) 0 0/180px 180px,
-    radial-gradient(circle at 34px 142px, rgba(236,72,153,0.22) 2.6px, transparent 3.2px) 0 0/200px 200px,
+  /* Balloon layer behind content */
+  .balloons{
+    position: fixed; inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .balloon{
+    position:absolute;
+    bottom:-120px;
+    width:44px; height:58px;
+    border-radius:50% 50% 45% 45%;
+    opacity:0.22;
+    filter:saturate(1.15);
+    box-shadow:0 14px 30px rgba(17,24,39,0.12);
+    animation: floatUp linear infinite;
+  }
+  .balloon::after{
+    content:"";
+    position:absolute;
+    left:50%; bottom:-7px;
+    width:10px; height:10px;
+    transform: translateX(-50%) rotate(45deg);
+    border-radius:2px;
+    background: rgba(255,255,255,0.25);
+  }
+  .balloon::before{
+    content:"";
+    position:absolute;
+    left:50%; bottom:-84px;
+    width:2px; height:78px;
+    transform: translateX(-50%);
+    background: rgba(17,24,39,0.10);
+    border-radius:2px;
+  }
+  .shine{
+    position:absolute; inset:0;
+    border-radius:inherit;
+    background:
+      radial-gradient(circle at 30% 25%, rgba(255,255,255,0.55), rgba(255,255,255,0) 45%),
+      radial-gradient(circle at 60% 35%, rgba(255,255,255,0.18), rgba(255,255,255,0) 55%);
+    mix-blend-mode: screen;
+  }
+  @keyframes floatUp{
+    0% { transform: translateY(0) translateX(0) rotate(-1deg); }
+    50%{ transform: translateY(-55vh) translateX(18px) rotate(1deg); }
+    100%{ transform: translateY(-120vh) translateX(-10px) rotate(-2deg); }
+  }
+  @media (prefers-reduced-motion: reduce){ .balloon{ animation:none; opacity:0.10; } }
+  @media (max-width: 640px){ .balloon.mobile-hide{ display:none; } }
 
-    /* secondary smaller dots for density */
-    radial-gradient(circle at 24px 92px, rgba(109,94,252,0.16) 1.8px, transparent 2.4px) 0 0/210px 210px,
-    radial-gradient(circle at 156px 148px, rgba(34,195,238,0.16) 1.8px, transparent 2.4px) 0 0/230px 230px,
-    radial-gradient(circle at 190px 54px, rgba(52,211,153,0.15) 1.8px, transparent 2.4px) 0 0/250px 250px,
-    radial-gradient(circle at 88px 188px, rgba(245,158,11,0.14) 1.8px, transparent 2.4px) 0 0/270px 270px,
-
-    /* soft “spotlight” washes behind the confetti */
-    radial-gradient(900px 520px at 18% -10%, rgba(109,94,252,0.22), rgba(0,0,0,0) 62%),
-    radial-gradient(900px 520px at 92% 8%, rgba(34,195,238,0.22), rgba(0,0,0,0) 62%),
-    radial-gradient(800px 520px at 55% 115%, rgba(52,211,153,0.12), rgba(0,0,0,0) 60%),
-
-    /* base gradient */
-    linear-gradient(180deg, var(--bg1), var(--bg2));
-}
-
-
-  /* Main wrapper */
+  /* Layout */
   #bc-wrap{
     width:min(920px, 92%);
     margin:42px auto 70px auto;
+    position: relative;
+    z-index: 1; /* above balloons */
   }
 
-  /* Notes (warning / info) */
   #bc-note{
     display:none;
-    border-radius: 14px;
-    padding: 12px 14px;
-    margin-bottom: 14px;
-    border: 1px solid rgba(245,158,11,0.35);
+    border-radius:14px;
+    padding:12px 14px;
+    margin-bottom:14px;
+    border:1px solid rgba(245,158,11,0.35);
     background: linear-gradient(180deg, rgba(255,247,237,0.95), rgba(255,251,235,0.95));
     box-shadow: var(--shadow2);
   }
 
-  /* Card base */
   .bc-card{
     background: var(--card);
     border: 1px solid var(--border);
@@ -77,330 +102,112 @@
     position: relative;
     overflow: hidden;
   }
-
-  /* Subtle colorful top edge */
   .bc-card::before{
     content:"";
-    position:absolute;
-    top:0; left:0; right:0;
-    height: 3px;
+    position:absolute; top:0; left:0; right:0;
+    height:3px;
     background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
-    opacity: 0.9;
+    opacity:0.9;
   }
 
-  /* Header row */
-  .bc-header{
-    display:flex;
-    gap:14px;
-    align-items:center;
-  }
-
+  .bc-header{ display:flex; gap:14px; align-items:center; }
   #bc-logo{
     display:none;
-    max-height:54px;
-    max-width:220px;
-    border-radius: 10px;
+    max-height:54px; max-width:220px;
+    border-radius:10px;
     box-shadow: 0 6px 16px rgba(17,24,39,0.10);
     background:#fff;
   }
-
-  #bc-business{
-    margin:0;
-    font-size: 26px;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-  }
-
-  /* Offer title + description */
-  #bc-title{
-    margin: 14px 0 6px 0;
-    font-size: 20px;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-  }
-
-  #bc-desc{
-    margin:0;
-    color: rgba(17,24,39,0.88);
-    white-space: pre-wrap;
-    font-size: 15.5px;
-    line-height: 1.55;
-  }
-
-  /* Offer image */
+  #bc-business{ margin:0; font-size:26px; line-height:1.15; letter-spacing:-0.02em; }
+  #bc-title{ margin:14px 0 6px 0; font-size:20px; line-height:1.2; letter-spacing:-0.01em; }
+  #bc-desc{ margin:0; color: rgba(17,24,39,0.88); white-space:pre-wrap; font-size:15.5px; line-height:1.55; }
   #bc-image{
     display:none;
-    width:100%;
-    max-height: 340px;
-    object-fit: cover;
-    border-radius: 14px;
-    margin-top: 14px;
-    border: 1px solid var(--border);
+    width:100%; max-height:340px;
+    object-fit:cover;
+    border-radius:14px;
+    margin-top:14px;
+    border:1px solid var(--border);
     box-shadow: 0 10px 24px rgba(17,24,39,0.10);
   }
+  #bc-fine{ font-size:12.5px; line-height:1.45; color:var(--muted); margin-top:12px; white-space:pre-wrap; }
 
-  /* Fine print */
-  #bc-fine{
-    font-size: 12.5px;
-    line-height: 1.45;
-    color: var(--muted);
-    margin-top: 12px;
-    white-space: pre-wrap;
-  }
+  #bc-form-card{ margin-top:18px; }
+  #bc-form-card h3{ margin:2px 0 12px 0; font-size:16px; color: rgba(17,24,39,0.92); letter-spacing:-0.01em; }
 
-  /* Form card spacing */
-  #bc-form-card{
-    margin-top: 18px;
-  }
-
-  #bc-form-card h3{
-    margin: 2px 0 12px 0;
-    font-size: 16px;
-    color: rgba(17,24,39,0.92);
-    letter-spacing: -0.01em;
-  }
-
-  /* Loading skeleton */
+  /* Skeleton */
   #bc-form-loading{
-    border-radius: 14px;
-    padding: 14px;
-    border: 1px solid rgba(109,94,252,0.16);
-    background:
-      linear-gradient(180deg, rgba(246,247,255,0.75), rgba(242,251,255,0.65));
+    border-radius:14px;
+    padding:14px;
+    border:1px solid rgba(109,94,252,0.16);
+    background: linear-gradient(180deg, rgba(246,247,255,0.75), rgba(242,251,255,0.65));
   }
-
   .sk-line{
-    height: 14px;
-    border-radius: 999px;
-    background: linear-gradient(90deg,
-      rgba(109,94,252,0.18) 20%,
-      rgba(34,195,238,0.18) 40%,
-      rgba(109,94,252,0.18) 60%);
-    background-size: 300% 100%;
+    height:14px; border-radius:999px;
+    background: linear-gradient(90deg, rgba(109,94,252,0.18) 20%, rgba(34,195,238,0.18) 40%, rgba(109,94,252,0.18) 60%);
+    background-size:300% 100%;
     animation: shimmer 1.15s infinite;
-    margin: 10px 0;
-    filter: saturate(1.05);
+    margin:10px 0;
   }
+  .sk-line.w60{ width:60%; } .sk-line.w80{ width:80%; } .sk-line.w95{ width:95%; }
+  @keyframes shimmer{ 0%{ background-position: 0% 0; } 100%{ background-position: 100% 0; } }
 
-  .sk-line.w60{ width:60%; }
-  .sk-line.w80{ width:80%; }
-  .sk-line.w95{ width:95%; }
+  /* Form container fade-in */
+  #jf-wrap{ opacity: 0; transform: translateY(6px); transition: opacity 240ms ease, transform 240ms ease; margin-top: 10px; }
+  #jf-wrap.ready{ opacity:1; transform: translateY(0); }
 
-  @keyframes shimmer{
-    0%{ background-position: 0% 0; }
-    100%{ background-position: 100% 0; }
-  }
-
-  /* Fade in form */
-  #jf-wrap{
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 240ms ease, transform 240ms ease;
-  }
-  #jf-wrap.ready{
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Optional: make the embedded form feel centered */
-  #jf-wrap iframe{
-    border-radius: 14px;
-  }
-
-  /* Responsive tweaks */
-  @media (max-width: 560px){
-    #bc-business{ font-size: 22px; }
-    #bc-title{ font-size: 18px; }
-    .bc-card{ padding: 16px; }
-  }
-
-  /* ---------- Mobile friendliness ---------- */
-@media (max-width: 640px){
-
-  /* tighter page margins */
-  #bc-wrap{
-    width: calc(100% - 24px);
-    margin: 18px auto 40px auto;
-  }
-
-  /* smaller padding, softer radius */
-  .bc-card{
-    padding: 14px;
-    border-radius: 14px;
-  }
-
-  /* stack header elements if needed */
-  .bc-header{
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  #bc-logo{
-    max-height: 44px;
-    max-width: 180px;
-  }
-
-  #bc-business{
-    font-size: 20px;
-    line-height: 1.15;
-  }
-
-  #bc-title{
-    font-size: 17px;
-    line-height: 1.2;
-  }
-
-  #bc-desc{
-    font-size: 14.5px;
-    line-height: 1.55;
-  }
-
-  #bc-image{
-    max-height: 240px;
-  }
-
-  /* give the embed more vertical space on phones */
+  /* Iframe baseline: MUST be full width even if handler fails */
   #jf-wrap iframe{
     width: 100% !important;
-    min-height: 820px !important;
-  }
-
-  /* if Jotform injects inline widths, force container to full width */
-  #jf-wrap, #jf-wrap *{
-    max-width: 100% !important;
-  }
-
-  /* loading skeleton spacing */
-  #bc-form-loading{
-    padding: 12px;
+    border: none;
     border-radius: 14px;
-  }
-}
-
-/* Extra small phones */
-@media (max-width: 380px){
-  #bc-wrap{ width: calc(100% - 18px); }
-  .bc-card{ padding: 12px; }
-  #bc-business{ font-size: 18px; }
-}
-
-</style><style>
-  /* Balloon layer sits behind content */
-  .balloons {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 0;
+    background: transparent;
+    min-height: 720px; /* fallback height */
   }
 
-  /* Make sure your page content stays above balloons */
-  #bc-wrap { position: relative; z-index: 1; }
-
-  .balloon {
-    position: absolute;
-    bottom: -120px;
-    width: 44px;
-    height: 58px;
-    border-radius: 50% 50% 45% 45%;
-    opacity: 0.22;                 /* subtle */
-    filter: saturate(1.15);
-    box-shadow: 0 14px 30px rgba(17,24,39,0.12);
-    animation: floatUp linear infinite;
-  }
-
-  /* little knot */
-  .balloon::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: -7px;
-    width: 10px;
-    height: 10px;
-    transform: translateX(-50%) rotate(45deg);
-    border-radius: 2px;
-    background: rgba(255,255,255,0.25);
-  }
-
-  /* string */
-  .balloon::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: -84px;
-    width: 2px;
-    height: 78px;
-    transform: translateX(-50%);
-    background: rgba(17,24,39,0.10);
-    border-radius: 2px;
-  }
-
-  /* shiny highlight */
-  .shine {
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background:
-      radial-gradient(circle at 30% 25%, rgba(255,255,255,0.55), rgba(255,255,255,0) 45%),
-      radial-gradient(circle at 60% 35%, rgba(255,255,255,0.18), rgba(255,255,255,0) 55%);
-    mix-blend-mode: screen;
-  }
-
-  @keyframes floatUp {
-    0%   { transform: translateY(0) translateX(0) rotate(-1deg); }
-    50%  { transform: translateY(-55vh) translateX(18px) rotate(1deg); }
-    100% { transform: translateY(-120vh) translateX(-10px) rotate(-2deg); }
-  }
-
-  /* Reduced motion accessibility */
-  @media (prefers-reduced-motion: reduce) {
-    .balloon { animation: none; opacity: 0.10; }
-  }
-
-  /* Mobile: fewer balloons to keep it smooth */
-  @media (max-width: 640px) {
-    .balloon { opacity: 0.18; }
-    .balloon.mobile-hide { display: none; }
+  /* Mobile */
+  @media (max-width: 640px){
+    #bc-wrap{ width: calc(100% - 24px); margin: 18px auto 40px auto; }
+    .bc-card{ padding: 14px; border-radius: 14px; }
+    .bc-header{ flex-direction: column; align-items:flex-start; gap:10px; }
+    #bc-logo{ max-height:44px; max-width:180px; }
+    #bc-business{ font-size:20px; }
+    #bc-title{ font-size:17px; }
+    #bc-desc{ font-size:14.5px; }
+    #bc-image{ max-height:240px; }
+    #jf-wrap iframe{ min-height: 980px; } /* better fallback on phones */
+    .balloon.mobile-hide{ display:none; }
   }
 </style>
 
 <div class="balloons" aria-hidden="true">
-  <!-- Each balloon: change left / duration / delay / scale for variety -->
-  <div class="balloon" style="left:6%;  animation-duration:18s; animation-delay:-2s; transform: scale(0.90); background: linear-gradient(180deg, rgba(109,94,252,0.9), rgba(109,94,252,0.35));"><div class="shine"></div></div>
+  <div class="balloon" style="left:6%;  animation-duration:18s; animation-delay:-2s;  transform: scale(0.90); background: linear-gradient(180deg, rgba(109,94,252,0.9), rgba(109,94,252,0.35));"><div class="shine"></div></div>
   <div class="balloon" style="left:18%; animation-duration:22s; animation-delay:-10s; transform: scale(1.05); background: linear-gradient(180deg, rgba(34,195,238,0.9), rgba(34,195,238,0.35));"><div class="shine"></div></div>
-  <div class="balloon" style="left:33%; animation-duration:20s; animation-delay:-6s; transform: scale(0.85); background: linear-gradient(180deg, rgba(52,211,153,0.9), rgba(52,211,153,0.35));"><div class="shine"></div></div>
+  <div class="balloon" style="left:33%; animation-duration:20s; animation-delay:-6s;  transform: scale(0.85); background: linear-gradient(180deg, rgba(52,211,153,0.9), rgba(52,211,153,0.35));"><div class="shine"></div></div>
   <div class="balloon" style="left:47%; animation-duration:26s; animation-delay:-14s; transform: scale(1.10); background: linear-gradient(180deg, rgba(245,158,11,0.85), rgba(245,158,11,0.30));"><div class="shine"></div></div>
-
-  <div class="balloon" style="left:62%; animation-duration:24s; animation-delay:-8s; transform: scale(0.95); background: linear-gradient(180deg, rgba(236,72,153,0.85), rgba(236,72,153,0.30));"><div class="shine"></div></div>
+  <div class="balloon" style="left:62%; animation-duration:24s; animation-delay:-8s;  transform: scale(0.95); background: linear-gradient(180deg, rgba(236,72,153,0.85), rgba(236,72,153,0.30));"><div class="shine"></div></div>
   <div class="balloon mobile-hide" style="left:74%; animation-duration:28s; animation-delay:-16s; transform: scale(1.15); background: linear-gradient(180deg, rgba(99,102,241,0.85), rgba(99,102,241,0.28));"><div class="shine"></div></div>
-  <div class="balloon mobile-hide" style="left:86%; animation-duration:21s; animation-delay:-4s; transform: scale(0.88); background: linear-gradient(180deg, rgba(14,165,233,0.85), rgba(14,165,233,0.28));"><div class="shine"></div></div>
+  <div class="balloon mobile-hide" style="left:86%; animation-duration:21s; animation-delay:-4s;  transform: scale(0.88); background: linear-gradient(180deg, rgba(14,165,233,0.85), rgba(14,165,233,0.28));"><div class="shine"></div></div>
   <div class="balloon mobile-hide" style="left:92%; animation-duration:30s; animation-delay:-20s; transform: scale(1.22); background: linear-gradient(180deg, rgba(34,197,94,0.80), rgba(34,197,94,0.25));"><div class="shine"></div></div>
 </div>
-
-
 
 <div id="bc-wrap">
   <div id="bc-note"></div>
 
-  <!-- Offer / Business info -->
   <div class="bc-card">
     <div class="bc-header">
       <img id="bc-logo" alt="Business logo" />
       <h1 id="bc-business">Loading…</h1>
     </div>
 
-    <h2 id="bc-title" style="margin:12px 0 6px 0;"></h2>
-    <p id="bc-desc" style="margin:0;white-space:pre-wrap;"></p>
-
+    <h2 id="bc-title"></h2>
+    <p id="bc-desc"></p>
     <img id="bc-image" alt="Offer image" />
-
     <div id="bc-fine"></div>
   </div>
 
-  <!-- Form (same design language) -->
   <div id="bc-form-card" class="bc-card">
-    <h3 style="margin:0 0 10px 0;">Sign up</h3>
+    <h3>Sign up</h3>
 
     <div id="bc-form-loading">
       <div class="sk-line w60"></div>
@@ -415,65 +222,124 @@
 </div>
 
 <script>
-  // --- your Jotform slug URL (nice) ---
+  // ========= EDIT THESE =========
+  const PD_GET_BUSINESS_URL = "https://eompxe9l4vf4e3z.m.pipedream.net/get-business"; // must return JSON
   const JOTFORM_BASE_URL = "https://form.jotform.com/mpgreco6/customer-birthday-club-signup";
-
-  // Hidden field unique names in Jotform
   const JOTFORM_BUSINESS_ID_FIELD = "bid";
   const JOTFORM_SOURCE_FIELD = "source";
+  // ==============================
 
   function qs(name) {
     return new URLSearchParams(window.location.search).get(name);
   }
+  function showNote(msg) {
+    const el = document.getElementById("bc-note");
+    el.style.display = "block";
+    el.textContent = msg;
+  }
+  function setText(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text || "";
+  }
+  function setImg(id, url) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (url) { el.src = url; el.style.display = "block"; }
+    else { el.style.display = "none"; }
+  }
 
-  (function () {
-    const businessId = qs("b") || "";
+  async function loadBusiness(businessId) {
+    const res = await fetch(PD_GET_BUSINESS_URL + "?b=" + encodeURIComponent(businessId), { cache: "no-store" });
+    if (!res.ok) {
+      const t = await res.text().catch(() => "");
+      throw new Error("Business lookup failed (HTTP " + res.status + "). " + (t ? ("Body: " + t.slice(0,120)) : ""));
+    }
+    const txt = await res.text();
+    try { return JSON.parse(txt); }
+    catch { throw new Error("Endpoint did not return JSON. First 80 chars: " + txt.slice(0,80)); }
+  }
+
+  function embedJotformIframe(businessId) {
     const source = window.location.href;
-
-    // Build form URL with prefill
     const u = new URL(JOTFORM_BASE_URL);
     if (businessId) u.searchParams.set(JOTFORM_BUSINESS_ID_FIELD, businessId);
     u.searchParams.set(JOTFORM_SOURCE_FIELD, source);
 
-    // Create iframe
     const iframe = document.createElement("iframe");
     iframe.id = "JotFormIFrame-260478526701055";
     iframe.title = "Customer Birthday Club Signup";
-    iframe.allowTransparency = true;
     iframe.allow = "geolocation; microphone; camera; fullscreen; payment";
+    iframe.setAttribute("allowtransparency", "true");
     iframe.frameBorder = "0";
-    iframe.scrolling = "no";
-    iframe.style.minWidth = "100%";
-    iframe.style.maxWidth = "100%";
-    iframe.style.width = "1px";           // helps some builders
-    iframe.style.height = "620px";        // initial height; handler will resize
-    iframe.style.border = "none";
-    iframe.style.borderRadius = "14px";
+    iframe.scrolling = "no"; // if resizing fails in GHL, set to "yes"
     iframe.src = u.toString();
 
     const wrap = document.getElementById("jf-wrap");
     wrap.innerHTML = "";
     wrap.appendChild(iframe);
 
-    // Load Jotform auto-resize handler (once)
-    const handler = document.createElement("script");
-    handler.src = "https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js";
-    handler.onload = function () {
-      window.jotformEmbedHandler(
-        "iframe[id='JotFormIFrame-260478526701055']",
-        "https://form.jotform.com/"
-      );
-    };
-    document.body.appendChild(handler);
-  })();
-</script>
-
-<style>
-  /* Mobile polish */
-  #jf-wrap { margin-top: 12px; }
-  @media (max-width: 640px){
-    #JotFormIFrame-260478526701055{
-      border-radius: 14px;
+    // Load handler (once) and call after it loads to avoid race conditions
+    if (!window.__JF_HANDLER_LOADING__) {
+      window.__JF_HANDLER_LOADING__ = true;
+      const handler = document.createElement("script");
+      handler.src = "https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js";
+      handler.onload = function () {
+        window.__JF_HANDLER_READY__ = true;
+        window.jotformEmbedHandler("iframe[id='JotFormIFrame-260478526701055']", "https://form.jotform.com/");
+        document.getElementById("bc-form-loading").style.display = "none";
+        wrap.classList.add("ready");
+      };
+      handler.onerror = function () {
+        // Fallback: show iframe anyway
+        document.getElementById("bc-form-loading").style.display = "none";
+        wrap.classList.add("ready");
+      };
+      document.body.appendChild(handler);
+    } else {
+      // Handler already injected
+      setTimeout(() => {
+        try {
+          if (window.jotformEmbedHandler) {
+            window.jotformEmbedHandler("iframe[id='JotFormIFrame-260478526701055']", "https://form.jotform.com/");
+          }
+        } catch (e) {}
+        document.getElementById("bc-form-loading").style.display = "none";
+        wrap.classList.add("ready");
+      }, 150);
     }
   }
-</style>
+
+  (async function init() {
+    const businessId = qs("b") || "";
+
+    // Always embed the form so users can still sign up
+    embedJotformIframe(businessId);
+
+    // Load offer card
+    if (!businessId) {
+      setText("bc-business", "Birthday Club");
+      showNote("Missing business ID. Use: /signup?b=YOUR_BUSINESS_ID");
+      return;
+    }
+
+    try {
+      const cfg = await loadBusiness(businessId);
+
+      if (cfg.status && cfg.status !== "active") {
+        showNote("This birthday club is currently unavailable.");
+      }
+
+      setText("bc-business", (cfg.business_name || "Birthday Club") + " Birthday Club");
+      setImg("bc-logo", cfg.logo_url);
+
+      setText("bc-title", cfg.offer_title || "");
+      setText("bc-desc", cfg.offer_description || "");
+      setImg("bc-image", cfg.offer_image_url);
+      setText("bc-fine", cfg.fine_print || "");
+    } catch (e) {
+      console.error(e);
+      setText("bc-business", "Birthday Club");
+      showNote(e.message || "We couldn't load this business's offer. Please try again later.");
+    }
+  })();
+</script>
