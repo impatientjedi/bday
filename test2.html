@@ -285,7 +285,99 @@
   #bc-business{ font-size: 18px; }
 }
 
+</style><style>
+  /* Balloon layer sits behind content */
+  .balloons {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  /* Make sure your page content stays above balloons */
+  #bc-wrap { position: relative; z-index: 1; }
+
+  .balloon {
+    position: absolute;
+    bottom: -120px;
+    width: 44px;
+    height: 58px;
+    border-radius: 50% 50% 45% 45%;
+    opacity: 0.22;                 /* subtle */
+    filter: saturate(1.15);
+    box-shadow: 0 14px 30px rgba(17,24,39,0.12);
+    animation: floatUp linear infinite;
+  }
+
+  /* little knot */
+  .balloon::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -7px;
+    width: 10px;
+    height: 10px;
+    transform: translateX(-50%) rotate(45deg);
+    border-radius: 2px;
+    background: rgba(255,255,255,0.25);
+  }
+
+  /* string */
+  .balloon::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -84px;
+    width: 2px;
+    height: 78px;
+    transform: translateX(-50%);
+    background: rgba(17,24,39,0.10);
+    border-radius: 2px;
+  }
+
+  /* shiny highlight */
+  .shine {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background:
+      radial-gradient(circle at 30% 25%, rgba(255,255,255,0.55), rgba(255,255,255,0) 45%),
+      radial-gradient(circle at 60% 35%, rgba(255,255,255,0.18), rgba(255,255,255,0) 55%);
+    mix-blend-mode: screen;
+  }
+
+  @keyframes floatUp {
+    0%   { transform: translateY(0) translateX(0) rotate(-1deg); }
+    50%  { transform: translateY(-55vh) translateX(18px) rotate(1deg); }
+    100% { transform: translateY(-120vh) translateX(-10px) rotate(-2deg); }
+  }
+
+  /* Reduced motion accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .balloon { animation: none; opacity: 0.10; }
+  }
+
+  /* Mobile: fewer balloons to keep it smooth */
+  @media (max-width: 640px) {
+    .balloon { opacity: 0.18; }
+    .balloon.mobile-hide { display: none; }
+  }
 </style>
+
+<div class="balloons" aria-hidden="true">
+  <!-- Each balloon: change left / duration / delay / scale for variety -->
+  <div class="balloon" style="left:6%;  animation-duration:18s; animation-delay:-2s; transform: scale(0.90); background: linear-gradient(180deg, rgba(109,94,252,0.9), rgba(109,94,252,0.35));"><div class="shine"></div></div>
+  <div class="balloon" style="left:18%; animation-duration:22s; animation-delay:-10s; transform: scale(1.05); background: linear-gradient(180deg, rgba(34,195,238,0.9), rgba(34,195,238,0.35));"><div class="shine"></div></div>
+  <div class="balloon" style="left:33%; animation-duration:20s; animation-delay:-6s; transform: scale(0.85); background: linear-gradient(180deg, rgba(52,211,153,0.9), rgba(52,211,153,0.35));"><div class="shine"></div></div>
+  <div class="balloon" style="left:47%; animation-duration:26s; animation-delay:-14s; transform: scale(1.10); background: linear-gradient(180deg, rgba(245,158,11,0.85), rgba(245,158,11,0.30));"><div class="shine"></div></div>
+
+  <div class="balloon" style="left:62%; animation-duration:24s; animation-delay:-8s; transform: scale(0.95); background: linear-gradient(180deg, rgba(236,72,153,0.85), rgba(236,72,153,0.30));"><div class="shine"></div></div>
+  <div class="balloon mobile-hide" style="left:74%; animation-duration:28s; animation-delay:-16s; transform: scale(1.15); background: linear-gradient(180deg, rgba(99,102,241,0.85), rgba(99,102,241,0.28));"><div class="shine"></div></div>
+  <div class="balloon mobile-hide" style="left:86%; animation-duration:21s; animation-delay:-4s; transform: scale(0.88); background: linear-gradient(180deg, rgba(14,165,233,0.85), rgba(14,165,233,0.28));"><div class="shine"></div></div>
+  <div class="balloon mobile-hide" style="left:92%; animation-duration:30s; animation-delay:-20s; transform: scale(1.22); background: linear-gradient(180deg, rgba(34,197,94,0.80), rgba(34,197,94,0.25));"><div class="shine"></div></div>
+</div>
+
 
 
 <div id="bc-wrap">
