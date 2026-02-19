@@ -26,26 +26,29 @@
   color:var(--text);
   font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
 
-  /* Soft confetti + subtle color washes */
   background:
-    /* confetti dots layer 1 */
-    radial-gradient(circle at 12px 18px, rgba(109,94,252,0.14) 2px, transparent 2.5px) 0 0/140px 140px,
-    radial-gradient(circle at 92px 64px, rgba(34,195,238,0.14) 2px, transparent 2.5px) 0 0/160px 160px,
-    radial-gradient(circle at 54px 118px, rgba(52,211,153,0.14) 2px, transparent 2.5px) 0 0/180px 180px,
-    radial-gradient(circle at 128px 34px, rgba(245,158,11,0.12) 2px, transparent 2.5px) 0 0/200px 200px,
+    /* bright confetti dots (primary) */
+    radial-gradient(circle at 18px 22px, rgba(109,94,252,0.28) 2.6px, transparent 3.2px) 0 0/120px 120px,
+    radial-gradient(circle at 86px 62px, rgba(34,195,238,0.28) 2.6px, transparent 3.2px) 0 0/140px 140px,
+    radial-gradient(circle at 52px 104px, rgba(52,211,153,0.26) 2.6px, transparent 3.2px) 0 0/160px 160px,
+    radial-gradient(circle at 112px 36px, rgba(245,158,11,0.24) 2.6px, transparent 3.2px) 0 0/180px 180px,
+    radial-gradient(circle at 34px 142px, rgba(236,72,153,0.22) 2.6px, transparent 3.2px) 0 0/200px 200px,
 
-    /* confetti dots layer 2 (even fainter, different spacing) */
-    radial-gradient(circle at 18px 92px, rgba(109,94,252,0.08) 1.5px, transparent 2px) 0 0/220px 220px,
-    radial-gradient(circle at 144px 154px, rgba(34,195,238,0.08) 1.5px, transparent 2px) 0 0/240px 240px,
-    radial-gradient(circle at 186px 46px, rgba(52,211,153,0.08) 1.5px, transparent 2px) 0 0/260px 260px,
+    /* secondary smaller dots for density */
+    radial-gradient(circle at 24px 92px, rgba(109,94,252,0.16) 1.8px, transparent 2.4px) 0 0/210px 210px,
+    radial-gradient(circle at 156px 148px, rgba(34,195,238,0.16) 1.8px, transparent 2.4px) 0 0/230px 230px,
+    radial-gradient(circle at 190px 54px, rgba(52,211,153,0.15) 1.8px, transparent 2.4px) 0 0/250px 250px,
+    radial-gradient(circle at 88px 188px, rgba(245,158,11,0.14) 1.8px, transparent 2.4px) 0 0/270px 270px,
 
-    /* soft “spotlight” washes */
-    radial-gradient(900px 480px at 20% -10%, rgba(109,94,252,0.14), rgba(0,0,0,0) 60%),
-    radial-gradient(900px 480px at 90% 10%, rgba(34,195,238,0.14), rgba(0,0,0,0) 60%),
+    /* soft “spotlight” washes behind the confetti */
+    radial-gradient(900px 520px at 18% -10%, rgba(109,94,252,0.22), rgba(0,0,0,0) 62%),
+    radial-gradient(900px 520px at 92% 8%, rgba(34,195,238,0.22), rgba(0,0,0,0) 62%),
+    radial-gradient(800px 520px at 55% 115%, rgba(52,211,153,0.12), rgba(0,0,0,0) 60%),
 
-    /* base */
+    /* base gradient */
     linear-gradient(180deg, var(--bg1), var(--bg2));
 }
+
 
   /* Main wrapper */
   #bc-wrap{
