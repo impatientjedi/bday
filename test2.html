@@ -1,0 +1,29 @@
+<div id="jf-wrap"></div>
+
+<script>
+  // EDIT if your hidden field unique names differ
+  const JOTFORM_FORM_ID = "260478526701055";
+  const JOTFORM_BUSINESS_ID_FIELD = "business_id";
+  const JOTFORM_SOURCE_FIELD = "source";
+
+  function qs(name) {
+    return new URLSearchParams(window.location.search).get(name);
+  }
+
+  (function () {
+    const businessId = qs("b") || "";
+    const source = window.location.href;
+
+    // Build the jsform script URL with prefill values
+    const s = document.createElement("script");
+    s.type = "text/javascript";
+
+    // Jotform prefill is done by adding params on the jsform URL
+    const src = new URL(`https://form.jotform.com/jsform/${JOTFORM_FORM_ID}`);
+    if (businessId) src.searchParams.set(JOTFORM_BUSINESS_ID_FIELD, businessId);
+    src.searchParams.set(JOTFORM_SOURCE_FIELD, source);
+
+    s.src = src.toString();
+    document.getElementById("jf-wrap").appendChild(s);
+  })();
+</script>
