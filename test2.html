@@ -153,16 +153,18 @@
   @keyframes shimmer{ 0%{ background-position: 0% 0; } 100%{ background-position: 100% 0; } }
 
   /* Form container fade-in */
-  #jf-wrap{ opacity: 0; transform: translateY(6px); transition: opacity 240ms ease, transform 240ms ease; margin-top: 10px; }
+  #jf-wrap{ opacity: 0; transform: translateY(6px); transition: opacity 240ms ease, transform 240ms ease; margin-top: 10px; width:100%}
   #jf-wrap.ready{ opacity:1; transform: translateY(0); }
 
   /* Iframe baseline: MUST be full width even if handler fails */
   #jf-wrap iframe{
     width: 100% !important;
+    max-width: 100% !important;
     border: none;
     border-radius: 14px;
     background: transparent;
     min-height: 720px; /* fallback height */
+    display: block;
   }
 
   /* Mobile */
@@ -175,7 +177,7 @@
     #bc-title{ font-size:17px; }
     #bc-desc{ font-size:14.5px; }
     #bc-image{ max-height:240px; }
-    #jf-wrap iframe{ min-height: 980px; } /* better fallback on phones */
+    #jf-wrap iframe{ min-height: 1100px; } /* better fallback on phones */
     .balloon.mobile-hide{ display:none; }
   }
 </style>
@@ -264,6 +266,9 @@
     const u = new URL(JOTFORM_BASE_URL);
     if (businessId) u.searchParams.set(JOTFORM_BUSINESS_ID_FIELD, businessId);
     u.searchParams.set(JOTFORM_SOURCE_FIELD, source);
+    // Force mobile layout
+    u.searchParams.set("isMobile", "1");
+    u.searchParams.set("nojump", "1");
 
     const iframe = document.createElement("iframe");
     iframe.id = "JotFormIFrame-260478526701055";
@@ -272,6 +277,7 @@
     iframe.setAttribute("allowtransparency", "true");
     iframe.frameBorder = "0";
     iframe.scrolling = "no"; // if resizing fails in GHL, set to "yes"
+    iframe.scrolling = (window.innerWidth <= 640) ? "yes" : "no";
     iframe.src = u.toString();
 
     const wrap = document.getElementById("jf-wrap");
