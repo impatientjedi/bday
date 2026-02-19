@@ -323,110 +323,65 @@
 </div>
 
 <script>
-  // ========= EDIT THESE =========
-  const PD_GET_BUSINESS_URL = "https://eompxe9l4vf4e3z.m.pipedream.net/get-business"; // must return JSON
-  const JOTFORM_FORM_ID = "260478526701055";
-  const JOTFORM_BUSINESS_ID_FIELD = "bid";     // your hidden field unique name
-  const JOTFORM_SOURCE_FIELD = "source";       // your hidden field unique name
-  // ==============================
+  // --- your Jotform slug URL (nice) ---
+  const JOTFORM_BASE_URL = "https://form.jotform.com/mpgreco6/customer-birthday-club-signup";
+
+  // Hidden field unique names in Jotform
+  const JOTFORM_BUSINESS_ID_FIELD = "bid";
+  const JOTFORM_SOURCE_FIELD = "source";
 
   function qs(name) {
     return new URLSearchParams(window.location.search).get(name);
   }
-  function showNote(msg) {
-    const el = document.getElementById("bc-note");
-    el.style.display = "block";
-    el.textContent = msg;
-  }
-  function setText(id, text) {
-    const el = document.getElementById(id);
-    if (el) el.textContent = text || "";
-  }
-  function setImg(id, url) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    if (url) {
-      el.src = url;
-      el.style.display = "block";
-    } else {
-      el.style.display = "none";
-    }
-  }
 
-  async function loadBusiness(businessId) {
-    const res = await fetch(PD_GET_BUSINESS_URL + "?b=" + encodeURIComponent(businessId), { cache: "no-store" });
-
-    if (!res.ok) {
-      const t = await res.text().catch(() => "");
-      throw new Error("Business lookup failed (HTTP " + res.status + "). " + (t ? ("Body: " + t.slice(0,120)) : ""));
-    }
-
-    const txt = await res.text();
-    let cfg;
-    try { cfg = JSON.parse(txt); }
-    catch { throw new Error("Endpoint did not return JSON. First 80 chars: " + txt.slice(0,80)); }
-
-    return cfg;
-  }
-
-  function embedJotform(businessId) {
+  (function () {
+    const businessId = qs("b") || "";
     const source = window.location.href;
 
-    const s = document.createElement("script");
-    s.type = "text/javascript";
+    // Build form URL with prefill
+    const u = new URL(JOTFORM_BASE_URL);
+    if (businessId) u.searchParams.set(JOTFORM_BUSINESS_ID_FIELD, businessId);
+    u.searchParams.set(JOTFORM_SOURCE_FIELD, source);
 
-    const src = new URL("https://form.jotform.com/jsform/" + JOTFORM_FORM_ID);
-    if (businessId) src.searchParams.set(JOTFORM_BUSINESS_ID_FIELD, businessId);
-    src.searchParams.set(JOTFORM_SOURCE_FIELD, source);
-
-    s.src = src.toString();
+    // Create iframe
+    const iframe = document.createElement("iframe");
+    iframe.id = "JotFormIFrame-260478526701055";
+    iframe.title = "Customer Birthday Club Signup";
+    iframe.allowTransparency = true;
+    iframe.allow = "geolocation; microphone; camera; fullscreen; payment";
+    iframe.frameBorder = "0";
+    iframe.scrolling = "no";
+    iframe.style.minWidth = "100%";
+    iframe.style.maxWidth = "100%";
+    iframe.style.width = "1px";           // helps some builders
+    iframe.style.height = "620px";        // initial height; handler will resize
+    iframe.style.border = "none";
+    iframe.style.borderRadius = "14px";
+    iframe.src = u.toString();
 
     const wrap = document.getElementById("jf-wrap");
-    wrap.appendChild(s);
+    wrap.innerHTML = "";
+    wrap.appendChild(iframe);
 
-    // jsform loads async; we fade in after a short delay + also on load event
-    setTimeout(() => {
-      document.getElementById("bc-form-loading").style.display = "none";
-      wrap.classList.add("ready");
-    }, 800);
-
-    s.addEventListener("load", () => {
-      document.getElementById("bc-form-loading").style.display = "none";
-      wrap.classList.add("ready");
-    });
-  }
-
-  (async function init() {
-    const businessId = qs("b") || "";
-
-    if (!businessId) {
-      setText("bc-business", "Missing business ID");
-      showNote("Use: /signup?b=YOUR_BUSINESS_ID");
-      embedJotform("");
-      return;
-    }
-
-    embedJotform(businessId);
-
-    try {
-      const cfg = await loadBusiness(businessId);
-
-      if (cfg.status && cfg.status !== "active") {
-        showNote("This birthday club is currently unavailable.");
-      }
-
-      setText("bc-business", (cfg.business_name || "Birthday Club") + " Birthday Club");
-      setImg("bc-logo", cfg.logo_url);
-
-      setText("bc-title", cfg.offer_title || "");
-      setText("bc-desc", cfg.offer_description || "");
-      setImg("bc-image", cfg.offer_image_url);
-
-      setText("bc-fine", cfg.fine_print || "");
-    } catch (e) {
-      console.error(e);
-      setText("bc-business", "Birthday Club");
-      showNote(e.message || "We couldn't load this business's offer. Please try again later.");
-    }
+    // Load Jotform auto-resize handler (once)
+    const handler = document.createElement("script");
+    handler.src = "https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js";
+    handler.onload = function () {
+      window.jotformEmbedHandler(
+        "iframe[id='JotFormIFrame-260478526701055']",
+        "https://form.jotform.com/"
+      );
+    };
+    document.body.appendChild(handler);
   })();
 </script>
+
+<style>
+  /* Mobile polish */
+  #jf-wrap { margin-top: 12px; }
+  @media (max-width: 640px){
+    #JotFormIFrame-260478526701055{
+      border-radius: 14px;
+    }
+  }
+</style>
