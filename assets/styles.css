@@ -277,7 +277,6 @@ li::marker {
 
 /* Optional: avoid broken image icons before JS fills them */
 #biz_logo {
-  
   max-width: 220px;
   max-height: 70px;
   width: auto;
@@ -286,7 +285,6 @@ li::marker {
 }
 
 #offer_img {
-  
   width: 100%;
   max-width: 100%;
   height: auto;
