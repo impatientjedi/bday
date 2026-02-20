@@ -124,10 +124,35 @@
         margin: 24px auto;
         padding: 0 12px;
       }
+
+      /* spinner */
+      .bc-spinner{
+        width:18px;
+        height:18px;
+        border-radius:50%;
+        border:3px solid rgba(17,24,39,0.18);
+        border-top-color: rgba(109,94,252,0.9);
+        animation: bc-spin 0.8s linear infinite;
+      }
+      
+      @keyframes bc-spin{
+        to { transform: rotate(360deg); }
+      }
+      
+      @media (prefers-reduced-motion: reduce){
+        .bc-spinner{ animation:none; }
+      }
+
     </style>
   </head>
 
   <body>
+    <!-- Spinner (Loading -->
+    <div id="bc-loading" aria-live="polite" style="display:flex;align-items:center;gap:10px;margin:12px 0;">
+      <div class="bc-spinner" aria-hidden="true"></div>
+      <div>Loading this business’s birthday offer…</div>
+    </div>
+
     <!-- Balloons (behind content) -->
     <div class="balloons" aria-hidden="true">
       <div class="balloon" style="left:6%;  animation-duration:18s; animation-delay:-2s;  transform: scale(0.90); background: linear-gradient(180deg, rgba(109,94,252,0.9), rgba(109,94,252,0.35));"><div class="shine"></div></div>
@@ -181,6 +206,22 @@
       // Jotform hidden field unique names
       const JOTFORM_BID_FIELD = "bid";
       const JOTFORM_SOURCE_FIELD = "source";
+      // ==================================================
+
+      // spinner
+
+      function showLoading(msg){
+        const el = document.getElementById("bc-loading");
+        if (!el) return;
+        if (msg) el.querySelector("div:last-child").textContent = msg;
+        el.style.display = "flex";
+      }
+      function hideLoading(){
+        const el = document.getElementById("bc-loading");
+        if (!el) return;
+        el.style.display = "none";
+      }
+
       // ==================================================
 
       function qs(name) {
@@ -303,6 +344,8 @@
 
       (async function init() {
         const businessId = qs("b") || "";
+
+        showLoading();
 
         // Embed the form regardless (so it’s usable even if business data fails)
         if (EMBED_MODE === "direct") renderDirectLink(businessId);
