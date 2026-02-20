@@ -441,50 +441,129 @@
         document.body.appendChild(handler);
       }
 
-      (async function init() {
-        const businessId = qs("b") || "";
-        showLoading();
+      // --- helper: wait for a promise with timeout ---
+function withTimeout(promise, ms, label = "operation") {
+  let t;
+  const timeout = new Promise((_, rej) => {
+    t = setTimeout(() => rej(new Error(`Timeout waiting for ${label} (${ms}ms)`)), ms);
+  });
+  return Promise.race([promise, timeout]).finally(() => clearTimeout(t));
+}
 
-        // If missing business ID, stop loading and show page with a message
-        if (!businessId) {
-          setText("biz_name", "Birthday Club Signup");
-          setNote("Missing business id in URL. Use: /signup?b=BUSINESS_ID");
-          setImg("biz_logo", "");
-          setImg("offer_img", "");
+// --- embed form and return a Promise when it’s ready ---
+function embedFormAndWait(businessId) {
+  const formArea = document.getElementById("form_area");
+  if (!formArea) return Promise.resolve();
 
-          // still embed the form (optional)
-          ensureFormEmbedded("");
-          showContent();
-          return;
+  // clear & re-embed (prevents duplicates)
+  formArea.innerHTML = "";
+
+  if (EMBED_MODE === "iframe") {
+    return new Promise((resolve) => {
+      const src = buildJotformUrlWithPrefill(JOTFORM_DIRECT_URL, businessId);
+
+      const iframe = document.createElement("iframe");
+      iframe.id = JOTFORM_IFRAME_ID;
+      iframe.title = "Customer Birthday Club Signup";
+      iframe.setAttribute("allowtransparency", "true");
+      iframe.setAttribute("allow", "geolocation; microphone; camera; fullscreen; payment");
+      iframe.setAttribute("frameborder", "0");
+      iframe.setAttribute("scrolling", (window.innerWidth <= 640) ? "yes" : "no");
+      iframe.style.minWidth = "100%";
+      iframe.style.maxWidth = "100%";
+      iframe.style.height = "539px";
+      iframe.style.border = "none";
+      iframe.src = src;
+
+      iframe.onload = () => resolve(); // ✅ reliable
+
+      formArea.appendChild(iframe);
+
+      // optional: jotform resize handler (doesn't affect "ready")
+      const handler = document.createElement("script");
+      handler.src = "https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js";
+      handler.onload = function () {
+        if (window.jotformEmbedHandler) {
+          window.jotformEmbedHandler(
+            "iframe[id='" + JOTFORM_IFRAME_ID + "']",
+            "https://form.jotform.com/"
+          );
         }
+      };
+      document.body.appendChild(handler);
+    });
+  }
+    
+  if (EMBED_MODE === "jsform") {
+    // "Best effort": resolve after script loads + brief delay so DOM inject occurs
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = buildJotformUrlWithPrefill(JOTFORM_JSFORM_SCRIPT, businessId);
+      script.onload = () => setTimeout(resolve, 600);
+      script.onerror = () => resolve(); // don't block forever
+      formArea.appendChild(script);
 
-        try {
-          const cfg = await loadBusiness(businessId);
+      // safety: even if onload never fires
+      setTimeout(resolve, 2500);
+    });
+  }
 
-          if (cfg.status && cfg.status !== "active") {
-            setNote("Note: This birthday club is currently unavailable (status: " + cfg.status + ").");
-          } else {
-            setNote("");
-          }
+  // direct link = instant
+  if (EMBED_MODE === "direct") {
+    renderDirectLink(businessId);
+    return Promise.resolve();
+  }
 
-          setText("biz_name", (cfg.business_name || "Birthday Club") + " Birthday Club");
-          setImg("biz_logo", cfg.logo_url || "");
+  return Promise.resolve();
+}
 
-          setText("offer_title", cfg.offer_title || "");
-          setText("offer_desc", cfg.offer_description || "");
-          setImg("offer_img", cfg.offer_image_url || "");
-          setText("fine_print", cfg.fine_print || "");
-        } catch (e) {
-          setText("biz_name", "Birthday Club Signup");
-          setNote("Could not load business offer info: " + (e && e.message ? e.message : String(e)));
-          setImg("biz_logo", "");
-          setImg("offer_img", "");
-        } finally {
-          // Always embed the form + reveal content (prevents “spinner forever”)
-          ensureFormEmbedded(businessId);
-          showContent();
-        }
-      })();
+
+     (async function init() {
+  const businessId = qs("b") || "";
+  showLoading();
+
+  try {
+    if (!businessId) {
+      setText("biz_name", "Birthday Club Signup");
+      setNote("Missing business id in URL. Use: /signup?b=BUSINESS_ID");
+      setImg("biz_logo", "");
+      setImg("offer_img", "");
+      // still show form
+      await withTimeout(embedFormAndWait(""), 5000, "form load");
+      return;
+    }
+
+    // Load business JSON
+    try {
+      const cfg = await withTimeout(loadBusiness(businessId), 3500, "business data");
+
+      if (cfg.status && cfg.status !== "active") {
+        setNote("Note: This birthday club is currently unavailable (status: " + cfg.status + ").");
+      } else setNote("");
+
+      setText("biz_name", (cfg.business_name || "Birthday Club") + " Birthday Club");
+      setImg("biz_logo", cfg.logo_url || "");
+      setText("offer_title", cfg.offer_title || "");
+      setText("offer_desc", cfg.offer_description || "");
+      setImg("offer_img", cfg.offer_image_url || "");
+      setText("fine_print", cfg.fine_print || "");
+    } catch (e) {
+      // business fetch failed, but still allow signup
+      setText("biz_name", "Birthday Club Signup");
+      setNote("Could not load business offer info.");
+      setImg("biz_logo", "");
+      setImg("offer_img", "");
+    }
+
+    // Now load the form and WAIT for it
+    await withTimeout(embedFormAndWait(businessId), 7000, "form load");
+  } finally {
+    // ✅ only reveal once both steps are done (or timed out)
+    showContent();
+  }
+})();
+
     </script>
   </body>
 </html>
