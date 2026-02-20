@@ -123,7 +123,7 @@
       <div id="biz">
         <h1 id="biz_name">Loading business...</h1>
         <div>
-          <img id="biz_logo" alt="Business logo" />
+          <img id="biz_logo" alt="Business logo" href="" />
         </div>
         <h2 id="offer_title"></h2>
         <p id="offer_desc"></p>
@@ -387,7 +387,7 @@
           if (!businessId) {
             setText('biz_name', 'Birthday Club Signup');
             setNote('Missing business id in URL. Use: /signup?b=BUSINESS_ID');
-            setImg('biz_logo', '');
+            setImg('biz_logo', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbATUhngz1vyO6op5JXFgYRyVV7nzhS2Dpsg&s');
             setImg('offer_img', '');
             // still show form
             await withTimeout(embedFormAndWait(''), 5000, 'form load');
