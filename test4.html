@@ -377,7 +377,10 @@
           setText("offer_desc", cfg.offer_description || "");
           setImg("offer_img", cfg.offer_image_url || "");
           setText("fine_print", cfg.fine_print || "");
+
+          hideLoading();
         } catch (e) {
+          hideLoading();
           setText("biz_name", "Birthday Club Signup");
           setNote("Could not load business offer info: " + (e && e.message ? e.message : String(e)));
           setImg("biz_logo", "");
