@@ -6,47 +6,76 @@
     <title>Birthday Club Signup</title>
 
     <style>
-      :root{
-        --bg1:#f6f7ff;
-        --bg2:#f2fbff;
+      :root {
+        --bg1: #f6f7ff;
+        --bg2: #f2fbff;
       }
 
-      html, body{
-        margin:0;
-        padding:0;
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-family:
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          sans-serif;
 
         /* Bright confetti background */
         background:
-          radial-gradient(circle at 18px 22px, rgba(109,94,252,0.28) 2.6px, transparent 3.2px) 0 0/120px 120px,
-          radial-gradient(circle at 86px 62px, rgba(34,195,238,0.28) 2.6px, transparent 3.2px) 0 0/140px 140px,
-          radial-gradient(circle at 52px 104px, rgba(52,211,153,0.26) 2.6px, transparent 3.2px) 0 0/160px 160px,
-          radial-gradient(circle at 112px 36px, rgba(245,158,11,0.24) 2.6px, transparent 3.2px) 0 0/180px 180px,
-          radial-gradient(circle at 34px 142px, rgba(236,72,153,0.22) 2.6px, transparent 3.2px) 0 0/200px 200px,
-          radial-gradient(circle at 24px 92px, rgba(109,94,252,0.16) 1.8px, transparent 2.4px) 0 0/210px 210px,
-          radial-gradient(circle at 156px 148px, rgba(34,195,238,0.16) 1.8px, transparent 2.4px) 0 0/230px 230px,
-          radial-gradient(circle at 190px 54px, rgba(52,211,153,0.15) 1.8px, transparent 2.4px) 0 0/250px 250px,
-          radial-gradient(circle at 88px 188px, rgba(245,158,11,0.14) 1.8px, transparent 2.4px) 0 0/270px 270px,
-          radial-gradient(900px 520px at 18% -10%, rgba(109,94,252,0.22), rgba(0,0,0,0) 62%),
-          radial-gradient(900px 520px at 92% 8%, rgba(34,195,238,0.22), rgba(0,0,0,0) 62%),
-          radial-gradient(800px 520px at 55% 115%, rgba(52,211,153,0.12), rgba(0,0,0,0) 60%),
+          radial-gradient(circle at 18px 22px, rgba(109, 94, 252, 0.28) 2.6px, transparent 3.2px) 0
+            0/120px 120px,
+          radial-gradient(circle at 86px 62px, rgba(34, 195, 238, 0.28) 2.6px, transparent 3.2px) 0
+            0/140px 140px,
+          radial-gradient(circle at 52px 104px, rgba(52, 211, 153, 0.26) 2.6px, transparent 3.2px) 0
+            0/160px 160px,
+          radial-gradient(circle at 112px 36px, rgba(245, 158, 11, 0.24) 2.6px, transparent 3.2px) 0
+            0/180px 180px,
+          radial-gradient(circle at 34px 142px, rgba(236, 72, 153, 0.22) 2.6px, transparent 3.2px) 0
+            0/200px 200px,
+          radial-gradient(circle at 24px 92px, rgba(109, 94, 252, 0.16) 1.8px, transparent 2.4px) 0
+            0/210px 210px,
+          radial-gradient(circle at 156px 148px, rgba(34, 195, 238, 0.16) 1.8px, transparent 2.4px)
+            0 0/230px 230px,
+          radial-gradient(circle at 190px 54px, rgba(52, 211, 153, 0.15) 1.8px, transparent 2.4px) 0
+            0/250px 250px,
+          radial-gradient(circle at 88px 188px, rgba(245, 158, 11, 0.14) 1.8px, transparent 2.4px) 0
+            0/270px 270px,
+          radial-gradient(900px 520px at 18% -10%, rgba(109, 94, 252, 0.22), rgba(0, 0, 0, 0) 62%),
+          radial-gradient(900px 520px at 92% 8%, rgba(34, 195, 238, 0.22), rgba(0, 0, 0, 0) 62%),
+          radial-gradient(800px 520px at 55% 115%, rgba(52, 211, 153, 0.12), rgba(0, 0, 0, 0) 60%),
           linear-gradient(180deg, var(--bg1), var(--bg2));
       }
 
       /* Fix iOS Safari “bullet dots” showing next to inputs */
-      ul, ol { list-style: none; margin: 0; padding: 0; }
-      li { list-style: none; }
-      
-      /* Some builders/themes inject bullets via ::marker */
-      li::marker { content: ""; }
-      
-      /* If any Jotform markup ends up in the same DOM (jsform mode), this helps too */
-      #form_area ul, #form_area ol, #form_area li { list-style: none !important; }
-      #form_area li::marker { content: "" !important; }
+      ul,
+      ol {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      li {
+        list-style: none;
+      }
 
+      /* Some builders/themes inject bullets via ::marker */
+      li::marker {
+        content: '';
+      }
+
+      /* If any Jotform markup ends up in the same DOM (jsform mode), this helps too */
+      #form_area ul,
+      #form_area ol,
+      #form_area li {
+        list-style: none !important;
+      }
+      #form_area li::marker {
+        content: '' !important;
+      }
 
       /* Floating balloons layer behind content */
-      .balloons{
+      .balloons {
         position: fixed;
         inset: 0;
         pointer-events: none;
@@ -54,7 +83,7 @@
         z-index: 0;
       }
 
-      .balloon{
+      .balloon {
         position: absolute;
         bottom: -120px;
         width: 44px;
@@ -62,63 +91,74 @@
         border-radius: 50% 50% 45% 45%;
         opacity: 0.22;
         filter: saturate(1.15);
-        box-shadow: 0 14px 30px rgba(17,24,39,0.12);
+        box-shadow: 0 14px 30px rgba(17, 24, 39, 0.12);
         animation: floatUp linear infinite;
       }
 
-      .balloon::after{
-        content:"";
-        position:absolute;
-        left:50%;
-        bottom:-7px;
-        width:10px;
-        height:10px;
+      .balloon::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -7px;
+        width: 10px;
+        height: 10px;
         transform: translateX(-50%) rotate(45deg);
-        border-radius:2px;
-        background: rgba(255,255,255,0.25);
+        border-radius: 2px;
+        background: rgba(255, 255, 255, 0.25);
       }
 
-      .balloon::before{
-        content:"";
-        position:absolute;
-        left:50%;
-        bottom:-84px;
-        width:2px;
-        height:78px;
+      .balloon::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -84px;
+        width: 2px;
+        height: 78px;
         transform: translateX(-50%);
-        background: rgba(17,24,39,0.10);
-        border-radius:2px;
+        background: rgba(17, 24, 39, 0.1);
+        border-radius: 2px;
       }
 
-      .shine{
-        position:absolute;
-        inset:0;
+      .shine {
+        position: absolute;
+        inset: 0;
         border-radius: inherit;
         background:
-          radial-gradient(circle at 30% 25%, rgba(255,255,255,0.55), rgba(255,255,255,0) 45%),
-          radial-gradient(circle at 60% 35%, rgba(255,255,255,0.18), rgba(255,255,255,0) 55%);
+          radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 45%),
+          radial-gradient(circle at 60% 35%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 55%);
         mix-blend-mode: screen;
       }
 
-      @keyframes floatUp{
-        0%   { transform: translateY(0) translateX(0) rotate(-1deg); }
-        50%  { transform: translateY(-55vh) translateX(18px) rotate(1deg); }
-        100% { transform: translateY(-120vh) translateX(-10px) rotate(-2deg); }
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0) translateX(0) rotate(-1deg);
+        }
+        50% {
+          transform: translateY(-55vh) translateX(18px) rotate(1deg);
+        }
+        100% {
+          transform: translateY(-120vh) translateX(-10px) rotate(-2deg);
+        }
       }
 
       /* Accessibility */
-      @media (prefers-reduced-motion: reduce){
-        .balloon{ animation:none; opacity:0.10; }
+      @media (prefers-reduced-motion: reduce) {
+        .balloon {
+          animation: none;
+          opacity: 0.1;
+        }
       }
 
       /* Mobile: fewer balloons for performance */
-      @media (max-width: 640px){
-        .balloon.mobile-hide{ display:none; }
+      @media (max-width: 640px) {
+        .balloon.mobile-hide {
+          display: none;
+        }
       }
 
       /* Keep app content above balloons */
-      #bc-wrap{
-        display:none;
+      #bc-wrap {
+        display: none;
         position: relative;
         z-index: 1;
         max-width: 920px;
@@ -129,37 +169,40 @@
       /* spinner */
 
       /* Centered spinner area */
-      #bc-loading{
+      #bc-loading {
         position: relative;
-        width:100%;
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        justify-content:flex-start;
-        margin-top:70px;         /* 50–100px from top */
-        gap:12px;
-        text-align:center;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        margin-top: 70px; /* 50–100px from top */
+        gap: 12px;
+        text-align: center;
         z-index: 2;
       }
 
       /* Spinner itself */
-      .bc-spinner{
-        width:36px;
-        height:36px;
-        border-radius:50%;
-        border:4px solid rgba(17,24,39,0.18);
-        border-top-color: rgba(109,94,252,0.95);
+      .bc-spinner {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 4px solid rgba(17, 24, 39, 0.18);
+        border-top-color: rgba(109, 94, 252, 0.95);
         animation: bc-spin 0.85s linear infinite;
       }
-      
-      @keyframes bc-spin{
-        to { transform: rotate(360deg); }
-      }
-      
-      @media (prefers-reduced-motion: reduce){
-        .bc-spinner{ animation:none; }
+
+      @keyframes bc-spin {
+        to {
+          transform: rotate(360deg);
+        }
       }
 
+      @media (prefers-reduced-motion: reduce) {
+        .bc-spinner {
+          animation: none;
+        }
+      }
     </style>
   </head>
 
@@ -170,17 +213,104 @@
       <div id="bc-loading-text">Loading this business’s birthday club…</div>
     </div>
 
-
     <!-- Balloons (behind content) -->
     <div class="balloons" aria-hidden="true">
-      <div class="balloon" style="left:6%;  animation-duration:18s; animation-delay:-2s;  transform: scale(0.90); background: linear-gradient(180deg, rgba(109,94,252,0.9), rgba(109,94,252,0.35));"><div class="shine"></div></div>
-      <div class="balloon" style="left:18%; animation-duration:22s; animation-delay:-10s; transform: scale(1.05); background: linear-gradient(180deg, rgba(34,195,238,0.9), rgba(34,195,238,0.35));"><div class="shine"></div></div>
-      <div class="balloon" style="left:33%; animation-duration:20s; animation-delay:-6s;  transform: scale(0.85); background: linear-gradient(180deg, rgba(52,211,153,0.9), rgba(52,211,153,0.35));"><div class="shine"></div></div>
-      <div class="balloon" style="left:47%; animation-duration:26s; animation-delay:-14s; transform: scale(1.10); background: linear-gradient(180deg, rgba(245,158,11,0.85), rgba(245,158,11,0.30));"><div class="shine"></div></div>
-      <div class="balloon" style="left:62%; animation-duration:24s; animation-delay:-8s;  transform: scale(0.95); background: linear-gradient(180deg, rgba(236,72,153,0.85), rgba(236,72,153,0.30));"><div class="shine"></div></div>
-      <div class="balloon mobile-hide" style="left:74%; animation-duration:28s; animation-delay:-16s; transform: scale(1.15); background: linear-gradient(180deg, rgba(99,102,241,0.85), rgba(99,102,241,0.28));"><div class="shine"></div></div>
-      <div class="balloon mobile-hide" style="left:86%; animation-duration:21s; animation-delay:-4s;  transform: scale(0.88); background: linear-gradient(180deg, rgba(14,165,233,0.85), rgba(14,165,233,0.28));"><div class="shine"></div></div>
-      <div class="balloon mobile-hide" style="left:92%; animation-duration:30s; animation-delay:-20s; transform: scale(1.22); background: linear-gradient(180deg, rgba(34,197,94,0.80), rgba(34,197,94,0.25));"><div class="shine"></div></div>
+      <div
+        class="balloon"
+        style="
+          left: 6%;
+          animation-duration: 18s;
+          animation-delay: -2s;
+          transform: scale(0.9);
+          background: linear-gradient(180deg, rgba(109, 94, 252, 0.9), rgba(109, 94, 252, 0.35));
+        "
+      >
+        <div class="shine"></div>
+      </div>
+      <div
+        class="balloon"
+        style="
+          left: 18%;
+          animation-duration: 22s;
+          animation-delay: -10s;
+          transform: scale(1.05);
+          background: linear-gradient(180deg, rgba(34, 195, 238, 0.9), rgba(34, 195, 238, 0.35));
+        "
+      >
+        <div class="shine"></div>
+      </div>
+      <div
+        class="balloon"
+        style="
+          left: 33%;
+          animation-duration: 20s;
+          animation-delay: -6s;
+          transform: scale(0.85);
+          background: linear-gradient(180deg, rgba(52, 211, 153, 0.9), rgba(52, 211, 153, 0.35));
+        "
+      >
+        <div class="shine"></div>
+      </div>
+      <div
+        class="balloon"
+        style="
+          left: 47%;
+          animation-duration: 26s;
+          animation-delay: -14s;
+          transform: scale(1.1);
+          background: linear-gradient(180deg, rgba(245, 158, 11, 0.85), rgba(245, 158, 11, 0.3));
+        "
+      >
+        <div class="shine"></div>
+      </div>
+      <div
+        class="balloon"
+        style="
+          left: 62%;
+          animation-duration: 24s;
+          animation-delay: -8s;
+          transform: scale(0.95);
+          background: linear-gradient(180deg, rgba(236, 72, 153, 0.85), rgba(236, 72, 153, 0.3));
+        "
+      >
+        <div class="shine"></div>
+      </div>
+      <div
+        class="balloon mobile-hide"
+        style="
+          left: 74%;
+          animation-duration: 28s;
+          animation-delay: -16s;
+          transform: scale(1.15);
+          background: linear-gradient(180deg, rgba(99, 102, 241, 0.85), rgba(99, 102, 241, 0.28));
+        "
+      >
+        <div class="shine"></div>
+      </div>
+      <div
+        class="balloon mobile-hide"
+        style="
+          left: 86%;
+          animation-duration: 21s;
+          animation-delay: -4s;
+          transform: scale(0.88);
+          background: linear-gradient(180deg, rgba(14, 165, 233, 0.85), rgba(14, 165, 233, 0.28));
+        "
+      >
+        <div class="shine"></div>
+      </div>
+      <div
+        class="balloon mobile-hide"
+        style="
+          left: 92%;
+          animation-duration: 30s;
+          animation-delay: -20s;
+          transform: scale(1.22);
+          background: linear-gradient(180deg, rgba(34, 197, 94, 0.8), rgba(34, 197, 94, 0.25));
+        "
+      >
+        <div class="shine"></div>
+      </div>
     </div>
 
     <div id="bc-wrap">
@@ -233,15 +363,15 @@
         const t = document.getElementById("bc-loading-text");
         if (t && msg) t.textContent = msg;
         if (l) l.style.display = "flex";
-      
+
         const wrap = document.getElementById("bc-wrap");
         if (wrap) wrap.style.display = "none";
       }
-      
+
       function showContent(){
         const l = document.getElementById("bc-loading");
         if (l) l.style.display = "none";
-      
+
         const wrap = document.getElementById("bc-wrap");
         if (wrap) wrap.style.display = "block";
       }
@@ -279,23 +409,23 @@
       function getBusinessJsonUrl(businessId) {
         return `https://${S3_BUCKET}.s3.${S3_REGION}.amazonaws.com/${S3_PREFIX}${encodeURIComponent(businessId)}.json`;
       }
-      
+
       async function loadBusiness(businessId) {
         const url = getBusinessJsonUrl(businessId);
         console.log(url);
-      
+
         // Fast + cache-friendly (S3/CloudFront should handle caching via Cache-Control)
         const res = await fetch(url, { method: "GET", mode: "cors", cache: "default" });
-      
+
         if (!res.ok) {
           const t = await res.text().catch(() => "");
           throw new Error(`Business JSON fetch failed (HTTP ${res.status}). ${t ? "Body: " + t.slice(0,120) : ""}`);
         }
-      
+
         // Will throw if not JSON (good error signal)
         return await res.json();
       }
-      
+
       function buildJotformUrlWithPrefill(baseUrl, businessId) {
         const u = new URL(baseUrl);
         if (businessId) u.searchParams.set(JOTFORM_BID_FIELD, businessId);
@@ -372,7 +502,7 @@
 
         showLoading();
 
-       
+
 
         // Business header
         if (!businessId) {
@@ -387,7 +517,7 @@
           if (EMBED_MODE === "jsform") renderJsformEmbed(businessId);
           if (EMBED_MODE === "iframe") renderIframeEmbed(businessId);
 
-          showContent();          
+          showContent();
           return;
         }
 

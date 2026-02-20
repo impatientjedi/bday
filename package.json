@@ -1,0 +1,26 @@
+{
+  "name": "bday",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/impatientjedi/bday.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/impatientjedi/bday/issues"
+  },
+  "homepage": "https://github.com/impatientjedi/bday#readme",
+  "devDependencies": {
+    "prettier": "^3.8.1"
+  }
+}

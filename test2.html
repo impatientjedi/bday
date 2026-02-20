@@ -1,99 +1,139 @@
 <style>
-  :root{
-    --bg1:#f6f7ff; --bg2:#f2fbff;
-    --card:#ffffff; --border:#e6e8f5;
-    --text:#111827; --muted:#6b7280;
-    --accent:#6d5efc; --accent2:#22c3ee; --accent3:#34d399;
-    --shadow: 0 10px 30px rgba(17,24,39,0.08);
-    --shadow2: 0 6px 18px rgba(17,24,39,0.06);
-    --radius:16px;
+  :root {
+    --bg1: #f6f7ff;
+    --bg2: #f2fbff;
+    --card: #ffffff;
+    --border: #e6e8f5;
+    --text: #111827;
+    --muted: #6b7280;
+    --accent: #6d5efc;
+    --accent2: #22c3ee;
+    --accent3: #34d399;
+    --shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+    --shadow2: 0 6px 18px rgba(17, 24, 39, 0.06);
+    --radius: 16px;
   }
 
-  html, body{
-    margin:0; padding:0; color:var(--text);
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    color: var(--text);
+    font-family:
+      system-ui,
+      -apple-system,
+      Segoe UI,
+      Roboto,
+      sans-serif;
     background:
-      radial-gradient(circle at 18px 22px, rgba(109,94,252,0.28) 2.6px, transparent 3.2px) 0 0/120px 120px,
-      radial-gradient(circle at 86px 62px, rgba(34,195,238,0.28) 2.6px, transparent 3.2px) 0 0/140px 140px,
-      radial-gradient(circle at 52px 104px, rgba(52,211,153,0.26) 2.6px, transparent 3.2px) 0 0/160px 160px,
-      radial-gradient(circle at 112px 36px, rgba(245,158,11,0.24) 2.6px, transparent 3.2px) 0 0/180px 180px,
-      radial-gradient(circle at 34px 142px, rgba(236,72,153,0.22) 2.6px, transparent 3.2px) 0 0/200px 200px,
-      radial-gradient(900px 520px at 18% -10%, rgba(109,94,252,0.22), rgba(0,0,0,0) 62%),
-      radial-gradient(900px 520px at 92% 8%, rgba(34,195,238,0.22), rgba(0,0,0,0) 62%),
-      radial-gradient(800px 520px at 55% 115%, rgba(52,211,153,0.12), rgba(0,0,0,0) 60%),
+      radial-gradient(circle at 18px 22px, rgba(109, 94, 252, 0.28) 2.6px, transparent 3.2px) 0
+        0/120px 120px,
+      radial-gradient(circle at 86px 62px, rgba(34, 195, 238, 0.28) 2.6px, transparent 3.2px) 0
+        0/140px 140px,
+      radial-gradient(circle at 52px 104px, rgba(52, 211, 153, 0.26) 2.6px, transparent 3.2px) 0
+        0/160px 160px,
+      radial-gradient(circle at 112px 36px, rgba(245, 158, 11, 0.24) 2.6px, transparent 3.2px) 0
+        0/180px 180px,
+      radial-gradient(circle at 34px 142px, rgba(236, 72, 153, 0.22) 2.6px, transparent 3.2px) 0
+        0/200px 200px,
+      radial-gradient(900px 520px at 18% -10%, rgba(109, 94, 252, 0.22), rgba(0, 0, 0, 0) 62%),
+      radial-gradient(900px 520px at 92% 8%, rgba(34, 195, 238, 0.22), rgba(0, 0, 0, 0) 62%),
+      radial-gradient(800px 520px at 55% 115%, rgba(52, 211, 153, 0.12), rgba(0, 0, 0, 0) 60%),
       linear-gradient(180deg, var(--bg1), var(--bg2));
   }
 
   /* Balloon layer behind content */
-  .balloons{
-    position: fixed; inset: 0;
+  .balloons {
+    position: fixed;
+    inset: 0;
     pointer-events: none;
     overflow: hidden;
     z-index: 0;
   }
-  .balloon{
-    position:absolute;
-    bottom:-120px;
-    width:44px; height:58px;
-    border-radius:50% 50% 45% 45%;
-    opacity:0.22;
-    filter:saturate(1.15);
-    box-shadow:0 14px 30px rgba(17,24,39,0.12);
+  .balloon {
+    position: absolute;
+    bottom: -120px;
+    width: 44px;
+    height: 58px;
+    border-radius: 50% 50% 45% 45%;
+    opacity: 0.22;
+    filter: saturate(1.15);
+    box-shadow: 0 14px 30px rgba(17, 24, 39, 0.12);
     animation: floatUp linear infinite;
   }
-  .balloon::after{
-    content:"";
-    position:absolute;
-    left:50%; bottom:-7px;
-    width:10px; height:10px;
+  .balloon::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -7px;
+    width: 10px;
+    height: 10px;
     transform: translateX(-50%) rotate(45deg);
-    border-radius:2px;
-    background: rgba(255,255,255,0.25);
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.25);
   }
-  .balloon::before{
-    content:"";
-    position:absolute;
-    left:50%; bottom:-84px;
-    width:2px; height:78px;
+  .balloon::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -84px;
+    width: 2px;
+    height: 78px;
     transform: translateX(-50%);
-    background: rgba(17,24,39,0.10);
-    border-radius:2px;
+    background: rgba(17, 24, 39, 0.1);
+    border-radius: 2px;
   }
-  .shine{
-    position:absolute; inset:0;
-    border-radius:inherit;
+  .shine {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
     background:
-      radial-gradient(circle at 30% 25%, rgba(255,255,255,0.55), rgba(255,255,255,0) 45%),
-      radial-gradient(circle at 60% 35%, rgba(255,255,255,0.18), rgba(255,255,255,0) 55%);
+      radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 45%),
+      radial-gradient(circle at 60% 35%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 55%);
     mix-blend-mode: screen;
   }
-  @keyframes floatUp{
-    0% { transform: translateY(0) translateX(0) rotate(-1deg); }
-    50%{ transform: translateY(-55vh) translateX(18px) rotate(1deg); }
-    100%{ transform: translateY(-120vh) translateX(-10px) rotate(-2deg); }
+  @keyframes floatUp {
+    0% {
+      transform: translateY(0) translateX(0) rotate(-1deg);
+    }
+    50% {
+      transform: translateY(-55vh) translateX(18px) rotate(1deg);
+    }
+    100% {
+      transform: translateY(-120vh) translateX(-10px) rotate(-2deg);
+    }
   }
-  @media (prefers-reduced-motion: reduce){ .balloon{ animation:none; opacity:0.10; } }
-  @media (max-width: 640px){ .balloon.mobile-hide{ display:none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .balloon {
+      animation: none;
+      opacity: 0.1;
+    }
+  }
+  @media (max-width: 640px) {
+    .balloon.mobile-hide {
+      display: none;
+    }
+  }
 
   /* Layout */
-  #bc-wrap{
-    width:min(920px, 92%);
-    margin:42px auto 70px auto;
+  #bc-wrap {
+    width: min(920px, 92%);
+    margin: 42px auto 70px auto;
     position: relative;
     z-index: 1; /* above balloons */
   }
 
-  #bc-note{
-    display:none;
-    border-radius:14px;
-    padding:12px 14px;
-    margin-bottom:14px;
-    border:1px solid rgba(245,158,11,0.35);
-    background: linear-gradient(180deg, rgba(255,247,237,0.95), rgba(255,251,235,0.95));
+  #bc-note {
+    display: none;
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    background: linear-gradient(180deg, rgba(255, 247, 237, 0.95), rgba(255, 251, 235, 0.95));
     box-shadow: var(--shadow2);
   }
 
-  .bc-card{
+  .bc-card {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -102,62 +142,132 @@
     position: relative;
     overflow: hidden;
   }
-  .bc-card::before{
-    content:"";
-    position:absolute; top:0; left:0; right:0;
-    height:3px;
+  .bc-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
     background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
-    opacity:0.9;
+    opacity: 0.9;
   }
 
-  .bc-header{ display:flex; gap:14px; align-items:center; }
-  #bc-logo{
-    display:none;
-    max-height:54px; max-width:220px;
-    border-radius:10px;
-    box-shadow: 0 6px 16px rgba(17,24,39,0.10);
-    background:#fff;
+  .bc-header {
+    display: flex;
+    gap: 14px;
+    align-items: center;
   }
-  #bc-business{ margin:0; font-size:26px; line-height:1.15; letter-spacing:-0.02em; }
-  #bc-title{ margin:14px 0 6px 0; font-size:20px; line-height:1.2; letter-spacing:-0.01em; }
-  #bc-desc{ margin:0; color: rgba(17,24,39,0.88); white-space:pre-wrap; font-size:15.5px; line-height:1.55; }
-  #bc-image{
-    display:none;
-    width:100%; max-height:340px;
-    object-fit:cover;
-    border-radius:14px;
-    margin-top:14px;
-    border:1px solid var(--border);
-    box-shadow: 0 10px 24px rgba(17,24,39,0.10);
+  #bc-logo {
+    display: none;
+    max-height: 54px;
+    max-width: 220px;
+    border-radius: 10px;
+    box-shadow: 0 6px 16px rgba(17, 24, 39, 0.1);
+    background: #fff;
   }
-  #bc-fine{ font-size:12.5px; line-height:1.45; color:var(--muted); margin-top:12px; white-space:pre-wrap; }
+  #bc-business {
+    margin: 0;
+    font-size: 26px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  #bc-title {
+    margin: 14px 0 6px 0;
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  #bc-desc {
+    margin: 0;
+    color: rgba(17, 24, 39, 0.88);
+    white-space: pre-wrap;
+    font-size: 15.5px;
+    line-height: 1.55;
+  }
+  #bc-image {
+    display: none;
+    width: 100%;
+    max-height: 340px;
+    object-fit: cover;
+    border-radius: 14px;
+    margin-top: 14px;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 24px rgba(17, 24, 39, 0.1);
+  }
+  #bc-fine {
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--muted);
+    margin-top: 12px;
+    white-space: pre-wrap;
+  }
 
-  #bc-form-card{ margin-top:18px; }
-  #bc-form-card h3{ margin:2px 0 12px 0; font-size:16px; color: rgba(17,24,39,0.92); letter-spacing:-0.01em; }
+  #bc-form-card {
+    margin-top: 18px;
+  }
+  #bc-form-card h3 {
+    margin: 2px 0 12px 0;
+    font-size: 16px;
+    color: rgba(17, 24, 39, 0.92);
+    letter-spacing: -0.01em;
+  }
 
   /* Skeleton */
-  #bc-form-loading{
-    border-radius:14px;
-    padding:14px;
-    border:1px solid rgba(109,94,252,0.16);
-    background: linear-gradient(180deg, rgba(246,247,255,0.75), rgba(242,251,255,0.65));
+  #bc-form-loading {
+    border-radius: 14px;
+    padding: 14px;
+    border: 1px solid rgba(109, 94, 252, 0.16);
+    background: linear-gradient(180deg, rgba(246, 247, 255, 0.75), rgba(242, 251, 255, 0.65));
   }
-  .sk-line{
-    height:14px; border-radius:999px;
-    background: linear-gradient(90deg, rgba(109,94,252,0.18) 20%, rgba(34,195,238,0.18) 40%, rgba(109,94,252,0.18) 60%);
-    background-size:300% 100%;
+  .sk-line {
+    height: 14px;
+    border-radius: 999px;
+    background: linear-gradient(
+      90deg,
+      rgba(109, 94, 252, 0.18) 20%,
+      rgba(34, 195, 238, 0.18) 40%,
+      rgba(109, 94, 252, 0.18) 60%
+    );
+    background-size: 300% 100%;
     animation: shimmer 1.15s infinite;
-    margin:10px 0;
+    margin: 10px 0;
   }
-  .sk-line.w60{ width:60%; } .sk-line.w80{ width:80%; } .sk-line.w95{ width:95%; }
-  @keyframes shimmer{ 0%{ background-position: 0% 0; } 100%{ background-position: 100% 0; } }
+  .sk-line.w60 {
+    width: 60%;
+  }
+  .sk-line.w80 {
+    width: 80%;
+  }
+  .sk-line.w95 {
+    width: 95%;
+  }
+  @keyframes shimmer {
+    0% {
+      background-position: 0% 0;
+    }
+    100% {
+      background-position: 100% 0;
+    }
+  }
 
   /* Form container fade-in */
-  #jf-wrap{ opacity: 0; transform: translateY(6px); transition: opacity 240ms ease, transform 240ms ease; margin-top: 10px; width:100%}
-  #jf-wrap.ready{ opacity:1; transform: translateY(0); }
+  #jf-wrap {
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 240ms ease,
+      transform 240ms ease;
+    margin-top: 10px;
+    width: 100%;
+  }
+  #jf-wrap.ready {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
   /* Iframe baseline: MUST be full width even if handler fails */
-  #jf-wrap iframe{
+  #jf-wrap iframe {
     width: 100% !important;
     max-width: 100% !important;
     border: none;
@@ -168,29 +278,142 @@
   }
 
   /* Mobile */
-  @media (max-width: 640px){
-    #bc-wrap{ width: calc(100% - 24px); margin: 18px auto 40px auto; }
-    .bc-card{ padding: 14px; border-radius: 14px; }
-    .bc-header{ flex-direction: column; align-items:flex-start; gap:10px; }
-    #bc-logo{ max-height:44px; max-width:180px; }
-    #bc-business{ font-size:20px; }
-    #bc-title{ font-size:17px; }
-    #bc-desc{ font-size:14.5px; }
-    #bc-image{ max-height:240px; }
-    #jf-wrap iframe{ min-height: 1100px; } /* better fallback on phones */
-    .balloon.mobile-hide{ display:none; }
+  @media (max-width: 640px) {
+    #bc-wrap {
+      width: calc(100% - 24px);
+      margin: 18px auto 40px auto;
+    }
+    .bc-card {
+      padding: 14px;
+      border-radius: 14px;
+    }
+    .bc-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    #bc-logo {
+      max-height: 44px;
+      max-width: 180px;
+    }
+    #bc-business {
+      font-size: 20px;
+    }
+    #bc-title {
+      font-size: 17px;
+    }
+    #bc-desc {
+      font-size: 14.5px;
+    }
+    #bc-image {
+      max-height: 240px;
+    }
+    #jf-wrap iframe {
+      min-height: 1100px;
+    } /* better fallback on phones */
+    .balloon.mobile-hide {
+      display: none;
+    }
   }
 </style>
 
 <div class="balloons" aria-hidden="true">
-  <div class="balloon" style="left:6%;  animation-duration:18s; animation-delay:-2s;  transform: scale(0.90); background: linear-gradient(180deg, rgba(109,94,252,0.9), rgba(109,94,252,0.35));"><div class="shine"></div></div>
-  <div class="balloon" style="left:18%; animation-duration:22s; animation-delay:-10s; transform: scale(1.05); background: linear-gradient(180deg, rgba(34,195,238,0.9), rgba(34,195,238,0.35));"><div class="shine"></div></div>
-  <div class="balloon" style="left:33%; animation-duration:20s; animation-delay:-6s;  transform: scale(0.85); background: linear-gradient(180deg, rgba(52,211,153,0.9), rgba(52,211,153,0.35));"><div class="shine"></div></div>
-  <div class="balloon" style="left:47%; animation-duration:26s; animation-delay:-14s; transform: scale(1.10); background: linear-gradient(180deg, rgba(245,158,11,0.85), rgba(245,158,11,0.30));"><div class="shine"></div></div>
-  <div class="balloon" style="left:62%; animation-duration:24s; animation-delay:-8s;  transform: scale(0.95); background: linear-gradient(180deg, rgba(236,72,153,0.85), rgba(236,72,153,0.30));"><div class="shine"></div></div>
-  <div class="balloon mobile-hide" style="left:74%; animation-duration:28s; animation-delay:-16s; transform: scale(1.15); background: linear-gradient(180deg, rgba(99,102,241,0.85), rgba(99,102,241,0.28));"><div class="shine"></div></div>
-  <div class="balloon mobile-hide" style="left:86%; animation-duration:21s; animation-delay:-4s;  transform: scale(0.88); background: linear-gradient(180deg, rgba(14,165,233,0.85), rgba(14,165,233,0.28));"><div class="shine"></div></div>
-  <div class="balloon mobile-hide" style="left:92%; animation-duration:30s; animation-delay:-20s; transform: scale(1.22); background: linear-gradient(180deg, rgba(34,197,94,0.80), rgba(34,197,94,0.25));"><div class="shine"></div></div>
+  <div
+    class="balloon"
+    style="
+      left: 6%;
+      animation-duration: 18s;
+      animation-delay: -2s;
+      transform: scale(0.9);
+      background: linear-gradient(180deg, rgba(109, 94, 252, 0.9), rgba(109, 94, 252, 0.35));
+    "
+  >
+    <div class="shine"></div>
+  </div>
+  <div
+    class="balloon"
+    style="
+      left: 18%;
+      animation-duration: 22s;
+      animation-delay: -10s;
+      transform: scale(1.05);
+      background: linear-gradient(180deg, rgba(34, 195, 238, 0.9), rgba(34, 195, 238, 0.35));
+    "
+  >
+    <div class="shine"></div>
+  </div>
+  <div
+    class="balloon"
+    style="
+      left: 33%;
+      animation-duration: 20s;
+      animation-delay: -6s;
+      transform: scale(0.85);
+      background: linear-gradient(180deg, rgba(52, 211, 153, 0.9), rgba(52, 211, 153, 0.35));
+    "
+  >
+    <div class="shine"></div>
+  </div>
+  <div
+    class="balloon"
+    style="
+      left: 47%;
+      animation-duration: 26s;
+      animation-delay: -14s;
+      transform: scale(1.1);
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.85), rgba(245, 158, 11, 0.3));
+    "
+  >
+    <div class="shine"></div>
+  </div>
+  <div
+    class="balloon"
+    style="
+      left: 62%;
+      animation-duration: 24s;
+      animation-delay: -8s;
+      transform: scale(0.95);
+      background: linear-gradient(180deg, rgba(236, 72, 153, 0.85), rgba(236, 72, 153, 0.3));
+    "
+  >
+    <div class="shine"></div>
+  </div>
+  <div
+    class="balloon mobile-hide"
+    style="
+      left: 74%;
+      animation-duration: 28s;
+      animation-delay: -16s;
+      transform: scale(1.15);
+      background: linear-gradient(180deg, rgba(99, 102, 241, 0.85), rgba(99, 102, 241, 0.28));
+    "
+  >
+    <div class="shine"></div>
+  </div>
+  <div
+    class="balloon mobile-hide"
+    style="
+      left: 86%;
+      animation-duration: 21s;
+      animation-delay: -4s;
+      transform: scale(0.88);
+      background: linear-gradient(180deg, rgba(14, 165, 233, 0.85), rgba(14, 165, 233, 0.28));
+    "
+  >
+    <div class="shine"></div>
+  </div>
+  <div
+    class="balloon mobile-hide"
+    style="
+      left: 92%;
+      animation-duration: 30s;
+      animation-delay: -20s;
+      transform: scale(1.22);
+      background: linear-gradient(180deg, rgba(34, 197, 94, 0.8), rgba(34, 197, 94, 0.25));
+    "
+  >
+    <div class="shine"></div>
+  </div>
 </div>
 
 <div id="bc-wrap">
@@ -225,40 +448,54 @@
 
 <script>
   // ========= EDIT THESE =========
-  const PD_GET_BUSINESS_URL = "https://eompxe9l4vf4e3z.m.pipedream.net/get-business"; // must return JSON
-  const JOTFORM_BASE_URL = "https://form.jotform.com/mpgreco6/customer-birthday-club-signup";
-  const JOTFORM_BUSINESS_ID_FIELD = "bid";
-  const JOTFORM_SOURCE_FIELD = "source";
+  const PD_GET_BUSINESS_URL = 'https://eompxe9l4vf4e3z.m.pipedream.net/get-business'; // must return JSON
+  const JOTFORM_BASE_URL = 'https://form.jotform.com/mpgreco6/customer-birthday-club-signup';
+  const JOTFORM_BUSINESS_ID_FIELD = 'bid';
+  const JOTFORM_SOURCE_FIELD = 'source';
   // ==============================
 
   function qs(name) {
     return new URLSearchParams(window.location.search).get(name);
   }
   function showNote(msg) {
-    const el = document.getElementById("bc-note");
-    el.style.display = "block";
+    const el = document.getElementById('bc-note');
+    el.style.display = 'block';
     el.textContent = msg;
   }
   function setText(id, text) {
     const el = document.getElementById(id);
-    if (el) el.textContent = text || "";
+    if (el) el.textContent = text || '';
   }
   function setImg(id, url) {
     const el = document.getElementById(id);
     if (!el) return;
-    if (url) { el.src = url; el.style.display = "block"; }
-    else { el.style.display = "none"; }
+    if (url) {
+      el.src = url;
+      el.style.display = 'block';
+    } else {
+      el.style.display = 'none';
+    }
   }
 
   async function loadBusiness(businessId) {
-    const res = await fetch(PD_GET_BUSINESS_URL + "?b=" + encodeURIComponent(businessId), { cache: "no-store" });
+    const res = await fetch(PD_GET_BUSINESS_URL + '?b=' + encodeURIComponent(businessId), {
+      cache: 'no-store',
+    });
     if (!res.ok) {
-      const t = await res.text().catch(() => "");
-      throw new Error("Business lookup failed (HTTP " + res.status + "). " + (t ? ("Body: " + t.slice(0,120)) : ""));
+      const t = await res.text().catch(() => '');
+      throw new Error(
+        'Business lookup failed (HTTP ' +
+          res.status +
+          '). ' +
+          (t ? 'Body: ' + t.slice(0, 120) : ''),
+      );
     }
     const txt = await res.text();
-    try { return JSON.parse(txt); }
-    catch { throw new Error("Endpoint did not return JSON. First 80 chars: " + txt.slice(0,80)); }
+    try {
+      return JSON.parse(txt);
+    } catch {
+      throw new Error('Endpoint did not return JSON. First 80 chars: ' + txt.slice(0, 80));
+    }
   }
 
   function embedJotformIframe(businessId) {
@@ -267,38 +504,41 @@
     if (businessId) u.searchParams.set(JOTFORM_BUSINESS_ID_FIELD, businessId);
     u.searchParams.set(JOTFORM_SOURCE_FIELD, source);
     // Force mobile layout
-    u.searchParams.set("isMobile", "1");
-    u.searchParams.set("nojump", "1");
+    u.searchParams.set('isMobile', '1');
+    u.searchParams.set('nojump', '1');
 
-    const iframe = document.createElement("iframe");
-    iframe.id = "JotFormIFrame-260478526701055";
-    iframe.title = "Customer Birthday Club Signup";
-    iframe.allow = "geolocation; microphone; camera; fullscreen; payment";
-    iframe.setAttribute("allowtransparency", "true");
-    iframe.frameBorder = "0";
-    iframe.scrolling = "no"; // if resizing fails in GHL, set to "yes"
-    iframe.scrolling = (window.innerWidth <= 640) ? "yes" : "no";
+    const iframe = document.createElement('iframe');
+    iframe.id = 'JotFormIFrame-260478526701055';
+    iframe.title = 'Customer Birthday Club Signup';
+    iframe.allow = 'geolocation; microphone; camera; fullscreen; payment';
+    iframe.setAttribute('allowtransparency', 'true');
+    iframe.frameBorder = '0';
+    iframe.scrolling = 'no'; // if resizing fails in GHL, set to "yes"
+    iframe.scrolling = window.innerWidth <= 640 ? 'yes' : 'no';
     iframe.src = u.toString();
 
-    const wrap = document.getElementById("jf-wrap");
-    wrap.innerHTML = "";
+    const wrap = document.getElementById('jf-wrap');
+    wrap.innerHTML = '';
     wrap.appendChild(iframe);
 
     // Load handler (once) and call after it loads to avoid race conditions
     if (!window.__JF_HANDLER_LOADING__) {
       window.__JF_HANDLER_LOADING__ = true;
-      const handler = document.createElement("script");
-      handler.src = "https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js";
+      const handler = document.createElement('script');
+      handler.src = 'https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js';
       handler.onload = function () {
         window.__JF_HANDLER_READY__ = true;
-        window.jotformEmbedHandler("iframe[id='JotFormIFrame-260478526701055']", "https://form.jotform.com/");
-        document.getElementById("bc-form-loading").style.display = "none";
-        wrap.classList.add("ready");
+        window.jotformEmbedHandler(
+          "iframe[id='JotFormIFrame-260478526701055']",
+          'https://form.jotform.com/',
+        );
+        document.getElementById('bc-form-loading').style.display = 'none';
+        wrap.classList.add('ready');
       };
       handler.onerror = function () {
         // Fallback: show iframe anyway
-        document.getElementById("bc-form-loading").style.display = "none";
-        wrap.classList.add("ready");
+        document.getElementById('bc-form-loading').style.display = 'none';
+        wrap.classList.add('ready');
       };
       document.body.appendChild(handler);
     } else {
@@ -306,45 +546,48 @@
       setTimeout(() => {
         try {
           if (window.jotformEmbedHandler) {
-            window.jotformEmbedHandler("iframe[id='JotFormIFrame-260478526701055']", "https://form.jotform.com/");
+            window.jotformEmbedHandler(
+              "iframe[id='JotFormIFrame-260478526701055']",
+              'https://form.jotform.com/',
+            );
           }
         } catch (e) {}
-        document.getElementById("bc-form-loading").style.display = "none";
-        wrap.classList.add("ready");
+        document.getElementById('bc-form-loading').style.display = 'none';
+        wrap.classList.add('ready');
       }, 150);
     }
   }
 
   (async function init() {
-    const businessId = qs("b") || "";
+    const businessId = qs('b') || '';
 
     // Always embed the form so users can still sign up
     embedJotformIframe(businessId);
 
     // Load offer card
     if (!businessId) {
-      setText("bc-business", "Birthday Club");
-      showNote("Missing business ID. Use: /signup?b=YOUR_BUSINESS_ID");
+      setText('bc-business', 'Birthday Club');
+      showNote('Missing business ID. Use: /signup?b=YOUR_BUSINESS_ID');
       return;
     }
 
     try {
       const cfg = await loadBusiness(businessId);
 
-      if (cfg.status && cfg.status !== "active") {
-        showNote("This birthday club is currently unavailable.");
+      if (cfg.status && cfg.status !== 'active') {
+        showNote('This birthday club is currently unavailable.');
       }
 
-      setText("bc-business", (cfg.business_name || "Birthday Club") + " Birthday Club");
-      setImg("bc-logo", cfg.logo_url);
+      setText('bc-business', (cfg.business_name || 'Birthday Club') + ' Birthday Club');
+      setImg('bc-logo', cfg.logo_url);
 
-      setText("bc-title", cfg.offer_title || "");
-      setText("bc-desc", cfg.offer_description || "");
-      setImg("bc-image", cfg.offer_image_url);
-      setText("bc-fine", cfg.fine_print || "");
+      setText('bc-title', cfg.offer_title || '');
+      setText('bc-desc', cfg.offer_description || '');
+      setImg('bc-image', cfg.offer_image_url);
+      setText('bc-fine', cfg.fine_print || '');
     } catch (e) {
       console.error(e);
-      setText("bc-business", "Birthday Club");
+      setText('bc-business', 'Birthday Club');
       showNote(e.message || "We couldn't load this business's offer. Please try again later.");
     }
   })();

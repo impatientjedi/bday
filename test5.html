@@ -6,42 +6,72 @@
     <title>Birthday Club Signup</title>
 
     <style>
-      :root{
-        --bg1:#f6f7ff;
-        --bg2:#f2fbff;
+      :root {
+        --bg1: #f6f7ff;
+        --bg2: #f2fbff;
       }
 
-      html, body{
-        margin:0;
-        padding:0;
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-family:
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          sans-serif;
 
         /* Bright confetti background */
         background:
-          radial-gradient(circle at 18px 22px, rgba(109,94,252,0.28) 2.6px, transparent 3.2px) 0 0/120px 120px,
-          radial-gradient(circle at 86px 62px, rgba(34,195,238,0.28) 2.6px, transparent 3.2px) 0 0/140px 140px,
-          radial-gradient(circle at 52px 104px, rgba(52,211,153,0.26) 2.6px, transparent 3.2px) 0 0/160px 160px,
-          radial-gradient(circle at 112px 36px, rgba(245,158,11,0.24) 2.6px, transparent 3.2px) 0 0/180px 180px,
-          radial-gradient(circle at 34px 142px, rgba(236,72,153,0.22) 2.6px, transparent 3.2px) 0 0/200px 200px,
-          radial-gradient(circle at 24px 92px, rgba(109,94,252,0.16) 1.8px, transparent 2.4px) 0 0/210px 210px,
-          radial-gradient(circle at 156px 148px, rgba(34,195,238,0.16) 1.8px, transparent 2.4px) 0 0/230px 230px,
-          radial-gradient(circle at 190px 54px, rgba(52,211,153,0.15) 1.8px, transparent 2.4px) 0 0/250px 250px,
-          radial-gradient(circle at 88px 188px, rgba(245,158,11,0.14) 1.8px, transparent 2.4px) 0 0/270px 270px,
-          radial-gradient(900px 520px at 18% -10%, rgba(109,94,252,0.22), rgba(0,0,0,0) 62%),
-          radial-gradient(900px 520px at 92% 8%, rgba(34,195,238,0.22), rgba(0,0,0,0) 62%),
-          radial-gradient(800px 520px at 55% 115%, rgba(52,211,153,0.12), rgba(0,0,0,0) 60%),
+          radial-gradient(circle at 18px 22px, rgba(109, 94, 252, 0.28) 2.6px, transparent 3.2px) 0
+            0/120px 120px,
+          radial-gradient(circle at 86px 62px, rgba(34, 195, 238, 0.28) 2.6px, transparent 3.2px) 0
+            0/140px 140px,
+          radial-gradient(circle at 52px 104px, rgba(52, 211, 153, 0.26) 2.6px, transparent 3.2px) 0
+            0/160px 160px,
+          radial-gradient(circle at 112px 36px, rgba(245, 158, 11, 0.24) 2.6px, transparent 3.2px) 0
+            0/180px 180px,
+          radial-gradient(circle at 34px 142px, rgba(236, 72, 153, 0.22) 2.6px, transparent 3.2px) 0
+            0/200px 200px,
+          radial-gradient(circle at 24px 92px, rgba(109, 94, 252, 0.16) 1.8px, transparent 2.4px) 0
+            0/210px 210px,
+          radial-gradient(circle at 156px 148px, rgba(34, 195, 238, 0.16) 1.8px, transparent 2.4px)
+            0 0/230px 230px,
+          radial-gradient(circle at 190px 54px, rgba(52, 211, 153, 0.15) 1.8px, transparent 2.4px) 0
+            0/250px 250px,
+          radial-gradient(circle at 88px 188px, rgba(245, 158, 11, 0.14) 1.8px, transparent 2.4px) 0
+            0/270px 270px,
+          radial-gradient(900px 520px at 18% -10%, rgba(109, 94, 252, 0.22), rgba(0, 0, 0, 0) 62%),
+          radial-gradient(900px 520px at 92% 8%, rgba(34, 195, 238, 0.22), rgba(0, 0, 0, 0) 62%),
+          radial-gradient(800px 520px at 55% 115%, rgba(52, 211, 153, 0.12), rgba(0, 0, 0, 0) 60%),
           linear-gradient(180deg, var(--bg1), var(--bg2));
       }
 
       /* Fix iOS Safari “bullet dots” showing next to inputs */
-      ul, ol { list-style: none; margin: 0; padding: 0; }
-      li { list-style: none; }
-      li::marker { content: ""; }
-      #form_area ul, #form_area ol, #form_area li { list-style: none !important; }
-      #form_area li::marker { content: "" !important; }
+      ul,
+      ol {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      li {
+        list-style: none;
+      }
+      li::marker {
+        content: '';
+      }
+      #form_area ul,
+      #form_area ol,
+      #form_area li {
+        list-style: none !important;
+      }
+      #form_area li::marker {
+        content: '' !important;
+      }
 
       /* Floating balloons layer behind content */
-      .balloons{
+      .balloons {
         position: fixed;
         inset: 0;
         pointer-events: none;
@@ -49,7 +79,7 @@
         z-index: 0;
       }
 
-      .balloon{
+      .balloon {
         position: absolute;
         bottom: -120px;
         width: 44px;
@@ -57,60 +87,71 @@
         border-radius: 50% 50% 45% 45%;
         opacity: 0.22;
         filter: saturate(1.15);
-        box-shadow: 0 14px 30px rgba(17,24,39,0.12);
+        box-shadow: 0 14px 30px rgba(17, 24, 39, 0.12);
         animation: floatUp linear infinite;
       }
 
-      .balloon::after{
-        content:"";
-        position:absolute;
-        left:50%;
-        bottom:-7px;
-        width:10px;
-        height:10px;
+      .balloon::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -7px;
+        width: 10px;
+        height: 10px;
         transform: translateX(-50%) rotate(45deg);
-        border-radius:2px;
-        background: rgba(255,255,255,0.25);
+        border-radius: 2px;
+        background: rgba(255, 255, 255, 0.25);
       }
 
-      .balloon::before{
-        content:"";
-        position:absolute;
-        left:50%;
-        bottom:-84px;
-        width:2px;
-        height:78px;
+      .balloon::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -84px;
+        width: 2px;
+        height: 78px;
         transform: translateX(-50%);
-        background: rgba(17,24,39,0.10);
-        border-radius:2px;
+        background: rgba(17, 24, 39, 0.1);
+        border-radius: 2px;
       }
 
-      .shine{
-        position:absolute;
-        inset:0;
+      .shine {
+        position: absolute;
+        inset: 0;
         border-radius: inherit;
         background:
-          radial-gradient(circle at 30% 25%, rgba(255,255,255,0.55), rgba(255,255,255,0) 45%),
-          radial-gradient(circle at 60% 35%, rgba(255,255,255,0.18), rgba(255,255,255,0) 55%);
+          radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 45%),
+          radial-gradient(circle at 60% 35%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 55%);
         mix-blend-mode: screen;
       }
 
-      @keyframes floatUp{
-        0%   { transform: translateY(0) translateX(0) rotate(-1deg); }
-        50%  { transform: translateY(-55vh) translateX(18px) rotate(1deg); }
-        100% { transform: translateY(-120vh) translateX(-10px) rotate(-2deg); }
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0) translateX(0) rotate(-1deg);
+        }
+        50% {
+          transform: translateY(-55vh) translateX(18px) rotate(1deg);
+        }
+        100% {
+          transform: translateY(-120vh) translateX(-10px) rotate(-2deg);
+        }
       }
 
-      @media (prefers-reduced-motion: reduce){
-        .balloon{ animation:none; opacity:0.10; }
+      @media (prefers-reduced-motion: reduce) {
+        .balloon {
+          animation: none;
+          opacity: 0.1;
+        }
       }
-      @media (max-width: 640px){
-        .balloon.mobile-hide{ display:none; }
+      @media (max-width: 640px) {
+        .balloon.mobile-hide {
+          display: none;
+        }
       }
 
       /* Keep app content above background balloons */
-      #bc-wrap{
-        display:none; /* hidden until business load completes */
+      #bc-wrap {
+        display: none; /* hidden until business load completes */
         position: relative;
         z-index: 1;
         max-width: 920px;
@@ -119,123 +160,135 @@
       }
 
       /* Centered loading area */
-      #bc-loading{
+      #bc-loading {
         position: relative;
-        width:100%;
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        justify-content:flex-start;
-        margin-top:70px; /* 50–100px from the top */
-        gap:12px;
-        text-align:center;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        margin-top: 70px; /* 50–100px from the top */
+        gap: 12px;
+        text-align: center;
         z-index: 2;
       }
 
       /* -------- Balloon Spinner -------- */
-      .bc-balloon-spinner{
+      .bc-balloon-spinner {
         position: relative;
         width: 150px;
         height: 96px;
       }
 
-      .bc-b{
-        position:absolute;
+      .bc-b {
+        position: absolute;
         bottom: 6px;
         width: 42px;
         height: 56px;
         border-radius: 50% 50% 46% 46%;
         opacity: 0.96;
         box-shadow:
-          0 14px 26px rgba(17,24,39,0.12),
-          inset 0 -10px 18px rgba(0,0,0,0.10);
+          0 14px 26px rgba(17, 24, 39, 0.12),
+          inset 0 -10px 18px rgba(0, 0, 0, 0.1);
         animation: bc-bob 1.05s ease-in-out infinite;
         transform-origin: 50% 90%;
       }
 
-      .bc-b1{
+      .bc-b1 {
         left: 10px;
-        background: linear-gradient(180deg, rgba(109,94,252,0.98), rgba(109,94,252,0.52));
+        background: linear-gradient(180deg, rgba(109, 94, 252, 0.98), rgba(109, 94, 252, 0.52));
         animation-delay: 0s;
       }
-      .bc-b2{
+      .bc-b2 {
         left: 54px;
-        background: linear-gradient(180deg, rgba(34,195,238,0.98), rgba(34,195,238,0.52));
+        background: linear-gradient(180deg, rgba(34, 195, 238, 0.98), rgba(34, 195, 238, 0.52));
         animation-delay: 0.16s;
       }
-      .bc-b3{
+      .bc-b3 {
         left: 98px;
-        background: linear-gradient(180deg, rgba(52,211,153,0.98), rgba(52,211,153,0.52));
+        background: linear-gradient(180deg, rgba(52, 211, 153, 0.98), rgba(52, 211, 153, 0.52));
         animation-delay: 0.32s;
       }
 
       /* Shine */
-      .bc-b::after{
-        content:"";
-        position:absolute;
-        inset:0;
+      .bc-b::after {
+        content: '';
+        position: absolute;
+        inset: 0;
         border-radius: inherit;
         background:
-          radial-gradient(circle at 30% 25%, rgba(255,255,255,0.65), rgba(255,255,255,0) 42%),
-          radial-gradient(circle at 58% 38%, rgba(255,255,255,0.18), rgba(255,255,255,0) 55%);
+          radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0) 42%),
+          radial-gradient(circle at 58% 38%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 55%);
         mix-blend-mode: screen;
-        pointer-events:none;
+        pointer-events: none;
       }
 
       /* Knot */
-      .bc-b::before{
-        content:"";
-        position:absolute;
-        left:50%;
-        bottom:-6px;
-        width:10px;
-        height:10px;
+      .bc-b::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -6px;
+        width: 10px;
+        height: 10px;
         transform: translateX(-50%) rotate(45deg);
-        border-radius:2px;
-        background: rgba(255,255,255,0.22);
-        box-shadow: 0 2px 8px rgba(17,24,39,0.10);
+        border-radius: 2px;
+        background: rgba(255, 255, 255, 0.22);
+        box-shadow: 0 2px 8px rgba(17, 24, 39, 0.1);
       }
 
       /* Strings (drawn on container for simplicity) */
-      .bc-balloon-spinner::before{
-        content:"";
-        position:absolute;
+      .bc-balloon-spinner::before {
+        content: '';
+        position: absolute;
         left: 0;
         right: 0;
         bottom: -6px;
         height: 62px;
-        pointer-events:none;
+        pointer-events: none;
         background:
-          linear-gradient(rgba(17,24,39,0.12), rgba(17,24,39,0.12)) 32px 0/2px 58px no-repeat,
-          linear-gradient(rgba(17,24,39,0.12), rgba(17,24,39,0.12)) 76px 0/2px 58px no-repeat,
-          linear-gradient(rgba(17,24,39,0.12), rgba(17,24,39,0.12)) 120px 0/2px 58px no-repeat;
+          linear-gradient(rgba(17, 24, 39, 0.12), rgba(17, 24, 39, 0.12)) 32px 0/2px 58px no-repeat,
+          linear-gradient(rgba(17, 24, 39, 0.12), rgba(17, 24, 39, 0.12)) 76px 0/2px 58px no-repeat,
+          linear-gradient(rgba(17, 24, 39, 0.12), rgba(17, 24, 39, 0.12)) 120px 0/2px 58px no-repeat;
         opacity: 0.9;
       }
 
       /* Subtle ground shadow */
-      .bc-balloon-spinner::after{
-        content:"";
-        position:absolute;
+      .bc-balloon-spinner::after {
+        content: '';
+        position: absolute;
         left: 18px;
         right: 18px;
         bottom: -12px;
         height: 10px;
         border-radius: 999px;
-        background: radial-gradient(closest-side, rgba(17,24,39,0.18), rgba(17,24,39,0));
+        background: radial-gradient(closest-side, rgba(17, 24, 39, 0.18), rgba(17, 24, 39, 0));
       }
 
-      @keyframes bc-bob{
-        0%   { transform: translateY(0) rotate(-2deg); }
-        50%  { transform: translateY(-14px) rotate(2deg); }
-        100% { transform: translateY(0) rotate(-2deg); }
+      @keyframes bc-bob {
+        0% {
+          transform: translateY(0) rotate(-2deg);
+        }
+        50% {
+          transform: translateY(-14px) rotate(2deg);
+        }
+        100% {
+          transform: translateY(0) rotate(-2deg);
+        }
       }
 
-      @media (prefers-reduced-motion: reduce){
-        .bc-b{ animation:none; }
+      @media (prefers-reduced-motion: reduce) {
+        .bc-b {
+          animation: none;
+        }
       }
 
       /* Optional: avoid broken image icons before JS fills them */
-      #biz_logo, #offer_img { display:none; max-width:100%; }
+      #biz_logo,
+      #offer_img {
+        display: none;
+        max-width: 100%;
+      }
     </style>
   </head>
 
@@ -252,14 +305,102 @@
 
     <!-- Background balloons (behind content) -->
     <div class="balloons" aria-hidden="true">
-      <div class="balloon" style="left:6%;  animation-duration:18s; animation-delay:-2s;  transform: scale(0.90); background: linear-gradient(180deg, rgba(109,94,252,0.9), rgba(109,94,252,0.35));"><div class="shine"></div></div>
-      <div class="balloon" style="left:18%; animation-duration:22s; animation-delay:-10s; transform: scale(1.05); background: linear-gradient(180deg, rgba(34,195,238,0.9), rgba(34,195,238,0.35));"><div class="shine"></div></div>
-      <div class="balloon" style="left:33%; animation-duration:20s; animation-delay:-6s;  transform: scale(0.85); background: linear-gradient(180deg, rgba(52,211,153,0.9), rgba(52,211,153,0.35));"><div class="shine"></div></div>
-      <div class="balloon" style="left:47%; animation-duration:26s; animation-delay:-14s; transform: scale(1.10); background: linear-gradient(180deg, rgba(245,158,11,0.85), rgba(245,158,11,0.30));"><div class="shine"></div></div>
-      <div class="balloon" style="left:62%; animation-duration:24s; animation-delay:-8s;  transform: scale(0.95); background: linear-gradient(180deg, rgba(236,72,153,0.85), rgba(236,72,153,0.30));"><div class="shine"></div></div>
-      <div class="balloon mobile-hide" style="left:74%; animation-duration:28s; animation-delay:-16s; transform: scale(1.15); background: linear-gradient(180deg, rgba(99,102,241,0.85), rgba(99,102,241,0.28));"><div class="shine"></div></div>
-      <div class="balloon mobile-hide" style="left:86%; animation-duration:21s; animation-delay:-4s;  transform: scale(0.88); background: linear-gradient(180deg, rgba(14,165,233,0.85), rgba(14,165,233,0.28));"><div class="shine"></div></div>
-      <div class="balloon mobile-hide" style="left:92%; animation-duration:30s; animation-delay:-20s; transform: scale(1.22); background: linear-gradient(180deg, rgba(34,197,94,0.80), rgba(34,197,94,0.25));"><div class="shine"></div></div>
+      <div
+        class="balloon"
+        style="
+          left: 6%;
+          animation-duration: 18s;
+          animation-delay: -2s;
+          transform: scale(0.9);
+          background: linear-gradient(180deg, rgba(109, 94, 252, 0.9), rgba(109, 94, 252, 0.35));
+        "
+      >
+        <div class="shine"></div>
+      </div>
+      <div
+        class="balloon"
+        style="
+          left: 18%;
+          animation-duration: 22s;
+          animation-delay: -10s;
+          transform: scale(1.05);
+          background: linear-gradient(180deg, rgba(34, 195, 238, 0.9), rgba(34, 195, 238, 0.35));
+        "
+      >
+        <div class="shine"></div>
+      </div>
+      <div
+        class="balloon"
+        style="
+          left: 33%;
+          animation-duration: 20s;
+          animation-delay: -6s;
+          transform: scale(0.85);
+          background: linear-gradient(180deg, rgba(52, 211, 153, 0.9), rgba(52, 211, 153, 0.35));
+        "
+      >
+        <div class="shine"></div>
+      </div>
+      <div
+        class="balloon"
+        style="
+          left: 47%;
+          animation-duration: 26s;
+          animation-delay: -14s;
+          transform: scale(1.1);
+          background: linear-gradient(180deg, rgba(245, 158, 11, 0.85), rgba(245, 158, 11, 0.3));
+        "
+      >
+        <div class="shine"></div>
+      </div>
+      <div
+        class="balloon"
+        style="
+          left: 62%;
+          animation-duration: 24s;
+          animation-delay: -8s;
+          transform: scale(0.95);
+          background: linear-gradient(180deg, rgba(236, 72, 153, 0.85), rgba(236, 72, 153, 0.3));
+        "
+      >
+        <div class="shine"></div>
+      </div>
+      <div
+        class="balloon mobile-hide"
+        style="
+          left: 74%;
+          animation-duration: 28s;
+          animation-delay: -16s;
+          transform: scale(1.15);
+          background: linear-gradient(180deg, rgba(99, 102, 241, 0.85), rgba(99, 102, 241, 0.28));
+        "
+      >
+        <div class="shine"></div>
+      </div>
+      <div
+        class="balloon mobile-hide"
+        style="
+          left: 86%;
+          animation-duration: 21s;
+          animation-delay: -4s;
+          transform: scale(0.88);
+          background: linear-gradient(180deg, rgba(14, 165, 233, 0.85), rgba(14, 165, 233, 0.28));
+        "
+      >
+        <div class="shine"></div>
+      </div>
+      <div
+        class="balloon mobile-hide"
+        style="
+          left: 92%;
+          animation-duration: 30s;
+          animation-delay: -20s;
+          transform: scale(1.22);
+          background: linear-gradient(180deg, rgba(34, 197, 94, 0.8), rgba(34, 197, 94, 0.25));
+        "
+      >
+        <div class="shine"></div>
+      </div>
     </div>
 
     <div id="bc-wrap">
@@ -287,20 +428,20 @@
 
     <script>
       // ===================== CONFIG =====================
-      const S3_BUCKET = "birthdayclub-public";
-      const S3_REGION = "us-west-2";
-      const S3_PREFIX = "businesses/";
+      const S3_BUCKET = 'birthdayclub-public';
+      const S3_REGION = 'us-west-2';
+      const S3_PREFIX = 'businesses/';
 
-      const JOTFORM_DIRECT_URL = "https://form.jotform.com/mpgreco6/customer-birthday-club-signup";
-      const JOTFORM_JSFORM_SCRIPT = "https://form.jotform.com/jsform/260478526701055";
-      const JOTFORM_IFRAME_ID = "JotFormIFrame-260478526701055";
+      const JOTFORM_DIRECT_URL = 'https://form.jotform.com/mpgreco6/customer-birthday-club-signup';
+      const JOTFORM_JSFORM_SCRIPT = 'https://form.jotform.com/jsform/260478526701055';
+      const JOTFORM_IFRAME_ID = 'JotFormIFrame-260478526701055';
 
       // "direct" | "jsform" | "iframe"
-      const EMBED_MODE = "iframe";
+      const EMBED_MODE = 'iframe';
 
       // Jotform hidden field unique names
-      const JOTFORM_BID_FIELD = "bid";
-      const JOTFORM_SOURCE_FIELD = "source";
+      const JOTFORM_BID_FIELD = 'bid';
+      const JOTFORM_SOURCE_FIELD = 'source';
       // ==================================================
 
       function qs(name) {
@@ -308,27 +449,27 @@
       }
 
       // Loading controls
-      function showLoading(msg){
-        const l = document.getElementById("bc-loading");
-        const t = document.getElementById("bc-loading-text");
+      function showLoading(msg) {
+        const l = document.getElementById('bc-loading');
+        const t = document.getElementById('bc-loading-text');
         if (t && msg) t.textContent = msg;
-        if (l) l.style.display = "flex";
+        if (l) l.style.display = 'flex';
 
-        const wrap = document.getElementById("bc-wrap");
-        if (wrap) wrap.style.display = "none";
+        const wrap = document.getElementById('bc-wrap');
+        if (wrap) wrap.style.display = 'none';
       }
 
-      function showContent(){
-        const l = document.getElementById("bc-loading");
-        if (l) l.style.display = "none";
+      function showContent() {
+        const l = document.getElementById('bc-loading');
+        if (l) l.style.display = 'none';
 
-        const wrap = document.getElementById("bc-wrap");
-        if (wrap) wrap.style.display = "block";
+        const wrap = document.getElementById('bc-wrap');
+        if (wrap) wrap.style.display = 'block';
       }
 
       function setText(id, text) {
         const el = document.getElementById(id);
-        if (el) el.textContent = text || "";
+        if (el) el.textContent = text || '';
       }
 
       function setImg(id, url) {
@@ -336,17 +477,17 @@
         if (!el) return;
         if (url) {
           el.src = url;
-          el.style.display = "";
+          el.style.display = '';
         } else {
-          el.removeAttribute("src");
-          el.style.display = "none";
+          el.removeAttribute('src');
+          el.style.display = 'none';
         }
       }
 
       function setNote(msg) {
-        const el = document.getElementById("biz_note");
+        const el = document.getElementById('biz_note');
         if (!el) return;
-        el.textContent = msg || "";
+        el.textContent = msg || '';
       }
 
       function getBusinessJsonUrl(businessId) {
@@ -355,12 +496,14 @@
 
       async function loadBusiness(businessId) {
         const url = getBusinessJsonUrl(businessId);
-        console.log("Fetching business JSON:", url);
+        console.log('Fetching business JSON:', url);
 
-        const res = await fetch(url, { method: "GET", mode: "cors", cache: "default" });
+        const res = await fetch(url, { method: 'GET', mode: 'cors', cache: 'default' });
         if (!res.ok) {
-          const t = await res.text().catch(() => "");
-          throw new Error(`Business JSON fetch failed (HTTP ${res.status}). ${t ? "Body: " + t.slice(0,120) : ""}`);
+          const t = await res.text().catch(() => '');
+          throw new Error(
+            `Business JSON fetch failed (HTTP ${res.status}). ${t ? 'Body: ' + t.slice(0, 120) : ''}`,
+          );
         }
         return await res.json();
       }
@@ -369,34 +512,34 @@
         const u = new URL(baseUrl);
         if (businessId) u.searchParams.set(JOTFORM_BID_FIELD, businessId);
         u.searchParams.set(JOTFORM_SOURCE_FIELD, window.location.href);
-        u.searchParams.set("isMobile", "1");
+        u.searchParams.set('isMobile', '1');
         return u.toString();
       }
 
       function ensureFormEmbedded(businessId) {
-        const formArea = document.getElementById("form_area");
+        const formArea = document.getElementById('form_area');
         if (!formArea) return;
 
         // prevent accidental double-embed
-        if (formArea.dataset.embedded === "1") return;
-        formArea.dataset.embedded = "1";
+        if (formArea.dataset.embedded === '1') return;
+        formArea.dataset.embedded = '1';
 
-        if (EMBED_MODE === "direct") renderDirectLink(businessId);
-        if (EMBED_MODE === "jsform") renderJsformEmbed(businessId);
-        if (EMBED_MODE === "iframe") renderIframeEmbed(businessId);
+        if (EMBED_MODE === 'direct') renderDirectLink(businessId);
+        if (EMBED_MODE === 'jsform') renderJsformEmbed(businessId);
+        if (EMBED_MODE === 'iframe') renderIframeEmbed(businessId);
       }
 
       function renderDirectLink(businessId) {
-        const formArea = document.getElementById("form_area");
+        const formArea = document.getElementById('form_area');
         const url = buildJotformUrlWithPrefill(JOTFORM_DIRECT_URL, businessId);
 
-        const p = document.createElement("p");
-        p.textContent = "Open the signup form:";
+        const p = document.createElement('p');
+        p.textContent = 'Open the signup form:';
 
-        const a = document.createElement("a");
+        const a = document.createElement('a');
         a.href = url;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
         a.textContent = url;
 
         formArea.appendChild(p);
@@ -404,166 +547,169 @@
       }
 
       function renderJsformEmbed(businessId) {
-        const formArea = document.getElementById("form_area");
-        const script = document.createElement("script");
-        script.type = "text/javascript";
+        const formArea = document.getElementById('form_area');
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
         script.src = buildJotformUrlWithPrefill(JOTFORM_JSFORM_SCRIPT, businessId);
         formArea.appendChild(script);
       }
 
       function renderIframeEmbed(businessId) {
-        const formArea = document.getElementById("form_area");
+        const formArea = document.getElementById('form_area');
         const src = buildJotformUrlWithPrefill(JOTFORM_DIRECT_URL, businessId);
 
-        const iframe = document.createElement("iframe");
+        const iframe = document.createElement('iframe');
         iframe.id = JOTFORM_IFRAME_ID;
-        iframe.title = "Customer Birthday Club Signup";
-        iframe.setAttribute("allowtransparency", "true");
-        iframe.setAttribute("allow", "geolocation; microphone; camera; fullscreen; payment");
-        iframe.setAttribute("frameborder", "0");
-        iframe.setAttribute("scrolling", (window.innerWidth <= 640) ? "yes" : "no");
+        iframe.title = 'Customer Birthday Club Signup';
+        iframe.setAttribute('allowtransparency', 'true');
+        iframe.setAttribute('allow', 'geolocation; microphone; camera; fullscreen; payment');
+        iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('scrolling', window.innerWidth <= 640 ? 'yes' : 'no');
 
-        iframe.style.minWidth = "100%";
-        iframe.style.maxWidth = "100%";
-        iframe.style.height = "539px";
-        iframe.style.border = "none";
+        iframe.style.minWidth = '100%';
+        iframe.style.maxWidth = '100%';
+        iframe.style.height = '539px';
+        iframe.style.border = 'none';
         iframe.src = src;
 
         formArea.appendChild(iframe);
 
-        const handler = document.createElement("script");
-        handler.src = "https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js";
+        const handler = document.createElement('script');
+        handler.src = 'https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js';
         handler.onload = function () {
           if (window.jotformEmbedHandler) {
-            window.jotformEmbedHandler("iframe[id='" + JOTFORM_IFRAME_ID + "']", "https://form.jotform.com/");
+            window.jotformEmbedHandler(
+              "iframe[id='" + JOTFORM_IFRAME_ID + "']",
+              'https://form.jotform.com/',
+            );
           }
         };
         document.body.appendChild(handler);
       }
 
       // --- helper: wait for a promise with timeout ---
-function withTimeout(promise, ms, label = "operation") {
-  let t;
-  const timeout = new Promise((_, rej) => {
-    t = setTimeout(() => rej(new Error(`Timeout waiting for ${label} (${ms}ms)`)), ms);
-  });
-  return Promise.race([promise, timeout]).finally(() => clearTimeout(t));
-}
+      function withTimeout(promise, ms, label = 'operation') {
+        let t;
+        const timeout = new Promise((_, rej) => {
+          t = setTimeout(() => rej(new Error(`Timeout waiting for ${label} (${ms}ms)`)), ms);
+        });
+        return Promise.race([promise, timeout]).finally(() => clearTimeout(t));
+      }
 
-// --- embed form and return a Promise when it’s ready ---
-function embedFormAndWait(businessId) {
-  const formArea = document.getElementById("form_area");
-  if (!formArea) return Promise.resolve();
+      // --- embed form and return a Promise when it’s ready ---
+      function embedFormAndWait(businessId) {
+        const formArea = document.getElementById('form_area');
+        if (!formArea) return Promise.resolve();
 
-  // clear & re-embed (prevents duplicates)
-  formArea.innerHTML = "";
+        // clear & re-embed (prevents duplicates)
+        formArea.innerHTML = '';
 
-  if (EMBED_MODE === "iframe") {
-    return new Promise((resolve) => {
-      const src = buildJotformUrlWithPrefill(JOTFORM_DIRECT_URL, businessId);
+        if (EMBED_MODE === 'iframe') {
+          return new Promise((resolve) => {
+            const src = buildJotformUrlWithPrefill(JOTFORM_DIRECT_URL, businessId);
 
-      const iframe = document.createElement("iframe");
-      iframe.id = JOTFORM_IFRAME_ID;
-      iframe.title = "Customer Birthday Club Signup";
-      iframe.setAttribute("allowtransparency", "true");
-      iframe.setAttribute("allow", "geolocation; microphone; camera; fullscreen; payment");
-      iframe.setAttribute("frameborder", "0");
-      iframe.setAttribute("scrolling", (window.innerWidth <= 640) ? "yes" : "no");
-      iframe.style.minWidth = "100%";
-      iframe.style.maxWidth = "100%";
-      iframe.style.height = "539px";
-      iframe.style.border = "none";
-      iframe.src = src;
+            const iframe = document.createElement('iframe');
+            iframe.id = JOTFORM_IFRAME_ID;
+            iframe.title = 'Customer Birthday Club Signup';
+            iframe.setAttribute('allowtransparency', 'true');
+            iframe.setAttribute('allow', 'geolocation; microphone; camera; fullscreen; payment');
+            iframe.setAttribute('frameborder', '0');
+            iframe.setAttribute('scrolling', window.innerWidth <= 640 ? 'yes' : 'no');
+            iframe.style.minWidth = '100%';
+            iframe.style.maxWidth = '100%';
+            iframe.style.height = '539px';
+            iframe.style.border = 'none';
+            iframe.src = src;
 
-      iframe.onload = () => resolve(); // ✅ reliable
+            iframe.onload = () => resolve(); // ✅ reliable
 
-      formArea.appendChild(iframe);
+            formArea.appendChild(iframe);
 
-      // optional: jotform resize handler (doesn't affect "ready")
-      const handler = document.createElement("script");
-      handler.src = "https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js";
-      handler.onload = function () {
-        if (window.jotformEmbedHandler) {
-          window.jotformEmbedHandler(
-            "iframe[id='" + JOTFORM_IFRAME_ID + "']",
-            "https://form.jotform.com/"
-          );
+            // optional: jotform resize handler (doesn't affect "ready")
+            const handler = document.createElement('script');
+            handler.src = 'https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js';
+            handler.onload = function () {
+              if (window.jotformEmbedHandler) {
+                window.jotformEmbedHandler(
+                  "iframe[id='" + JOTFORM_IFRAME_ID + "']",
+                  'https://form.jotform.com/',
+                );
+              }
+            };
+            document.body.appendChild(handler);
+          });
         }
-      };
-      document.body.appendChild(handler);
-    });
-  }
-    
-  if (EMBED_MODE === "jsform") {
-    // "Best effort": resolve after script loads + brief delay so DOM inject occurs
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.type = "text/javascript";
-      script.src = buildJotformUrlWithPrefill(JOTFORM_JSFORM_SCRIPT, businessId);
-      script.onload = () => setTimeout(resolve, 600);
-      script.onerror = () => resolve(); // don't block forever
-      formArea.appendChild(script);
 
-      // safety: even if onload never fires
-      setTimeout(resolve, 2500);
-    });
-  }
+        if (EMBED_MODE === 'jsform') {
+          // "Best effort": resolve after script loads + brief delay so DOM inject occurs
+          return new Promise((resolve) => {
+            const script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = buildJotformUrlWithPrefill(JOTFORM_JSFORM_SCRIPT, businessId);
+            script.onload = () => setTimeout(resolve, 600);
+            script.onerror = () => resolve(); // don't block forever
+            formArea.appendChild(script);
 
-  // direct link = instant
-  if (EMBED_MODE === "direct") {
-    renderDirectLink(businessId);
-    return Promise.resolve();
-  }
+            // safety: even if onload never fires
+            setTimeout(resolve, 2500);
+          });
+        }
 
-  return Promise.resolve();
-}
+        // direct link = instant
+        if (EMBED_MODE === 'direct') {
+          renderDirectLink(businessId);
+          return Promise.resolve();
+        }
 
+        return Promise.resolve();
+      }
 
-     (async function init() {
-  const businessId = qs("b") || "";
-  showLoading();
+      (async function init() {
+        const businessId = qs('b') || '';
+        showLoading();
 
-  try {
-    if (!businessId) {
-      setText("biz_name", "Birthday Club Signup");
-      setNote("Missing business id in URL. Use: /signup?b=BUSINESS_ID");
-      setImg("biz_logo", "");
-      setImg("offer_img", "");
-      // still show form
-      await withTimeout(embedFormAndWait(""), 5000, "form load");
-      return;
-    }
+        try {
+          if (!businessId) {
+            setText('biz_name', 'Birthday Club Signup');
+            setNote('Missing business id in URL. Use: /signup?b=BUSINESS_ID');
+            setImg('biz_logo', '');
+            setImg('offer_img', '');
+            // still show form
+            await withTimeout(embedFormAndWait(''), 5000, 'form load');
+            return;
+          }
 
-    // Load business JSON
-    try {
-      const cfg = await withTimeout(loadBusiness(businessId), 3500, "business data");
+          // Load business JSON
+          try {
+            const cfg = await withTimeout(loadBusiness(businessId), 3500, 'business data');
 
-      if (cfg.status && cfg.status !== "active") {
-        setNote("Note: This birthday club is currently unavailable (status: " + cfg.status + ").");
-      } else setNote("");
+            if (cfg.status && cfg.status !== 'active') {
+              setNote(
+                'Note: This birthday club is currently unavailable (status: ' + cfg.status + ').',
+              );
+            } else setNote('');
 
-      setText("biz_name", (cfg.business_name || "Birthday Club") + " Birthday Club");
-      setImg("biz_logo", cfg.logo_url || "");
-      setText("offer_title", cfg.offer_title || "");
-      setText("offer_desc", cfg.offer_description || "");
-      setImg("offer_img", cfg.offer_image_url || "");
-      setText("fine_print", cfg.fine_print || "");
-    } catch (e) {
-      // business fetch failed, but still allow signup
-      setText("biz_name", "Birthday Club Signup");
-      setNote("Could not load business offer info.");
-      setImg("biz_logo", "");
-      setImg("offer_img", "");
-    }
+            setText('biz_name', (cfg.business_name || 'Birthday Club') + ' Birthday Club');
+            setImg('biz_logo', cfg.logo_url || '');
+            setText('offer_title', cfg.offer_title || '');
+            setText('offer_desc', cfg.offer_description || '');
+            setImg('offer_img', cfg.offer_image_url || '');
+            setText('fine_print', cfg.fine_print || '');
+          } catch (e) {
+            // business fetch failed, but still allow signup
+            setText('biz_name', 'Birthday Club Signup');
+            setNote('Could not load business offer info.');
+            setImg('biz_logo', '');
+            setImg('offer_img', '');
+          }
 
-    // Now load the form and WAIT for it
-    await withTimeout(embedFormAndWait(businessId), 7000, "form load");
-  } finally {
-    // ✅ only reveal once both steps are done (or timed out)
-    showContent();
-  }
-})();
-
+          // Now load the form and WAIT for it
+          await withTimeout(embedFormAndWait(businessId), 7000, 'form load');
+        } finally {
+          // ✅ only reveal once both steps are done (or timed out)
+          showContent();
+        }
+      })();
     </script>
   </body>
 </html>
