@@ -167,6 +167,10 @@
       // ===================== CONFIG =====================
       const PD_GET_BUSINESS_URL = "https://eompxe9l4vf4e3z.m.pipedream.net/get-business";
 
+      const S3_BUCKET = "birthdayclub-public";
+      const S3_REGION = "us-east-1"; // <-- change if different
+      const S3_PREFIX = "businesses/"; // where you store configs
+
       const JOTFORM_DIRECT_URL = "https://form.jotform.com/mpgreco6/customer-birthday-club-signup";
       const JOTFORM_JSFORM_SCRIPT = "https://form.jotform.com/jsform/260478526701055";
       const JOTFORM_IFRAME_ID = "JotFormIFrame-260478526701055";
@@ -206,17 +210,25 @@
         el.textContent = msg || "";
       }
 
-      async function loadBusiness(businessId) {
-        const res = await fetch(PD_GET_BUSINESS_URL + "?b=" + encodeURIComponent(businessId), { cache: "no-store" });
-        const txt = await res.text();
-        if (!res.ok) throw new Error("Business lookup failed (HTTP " + res.status + "): " + txt.slice(0, 120));
-        try {
-          return JSON.parse(txt);
-        } catch (e) {
-          throw new Error("Pipedream did not return JSON. First 80 chars: " + txt.slice(0, 80));
-        }
+      function getBusinessJsonUrl(businessId) {
+        return `https://${S3_BUCKET}.s3.${S3_REGION}.amazonaws.com/${S3_PREFIX}${encodeURIComponent(businessId)}.json`;
       }
-
+      
+      async function loadBusiness(businessId) {
+        const url = getBusinessJsonUrl(businessId);
+      
+        // Fast + cache-friendly (S3/CloudFront should handle caching via Cache-Control)
+        const res = await fetch(url, { method: "GET", mode: "cors", cache: "default" });
+      
+        if (!res.ok) {
+          const t = await res.text().catch(() => "");
+          throw new Error(`Business JSON fetch failed (HTTP ${res.status}). ${t ? "Body: " + t.slice(0,120) : ""}`);
+        }
+      
+        // Will throw if not JSON (good error signal)
+        return await res.json();
+      }
+      
       function buildJotformUrlWithPrefill(baseUrl, businessId) {
         const u = new URL(baseUrl);
         if (businessId) u.searchParams.set(JOTFORM_BID_FIELD, businessId);
