@@ -123,12 +123,12 @@
       <div id="biz">
         <h1 id="biz_name">Loading business...</h1>
         <div>
-          <img id="biz_logo" alt="Business logo" />
+          <img id="biz_logo" alt="Business logo" hidden />
         </div>
         <h2 id="offer_title"></h2>
         <p id="offer_desc"></p>
         <div>
-          <img id="offer_img" alt="Offer image" />
+          <img id="offer_img" alt="Offer image" hidden />
         </div>
         <p id="fine_print"></p>
         <div id="biz_note"></div>
@@ -191,35 +191,28 @@
         const el = document.getElementById(id);
         if (!el) return;
 
-        // Clear any previous handlers
         el.onload = null;
         el.onerror = null;
 
         if (!url || typeof url !== 'string') {
           el.removeAttribute('src');
-          el.style.display = 'none';
+          el.hidden = true;
           return;
         }
 
-        // If the host blocks hotlinking, this will fail; we handle it in onerror
-        el.style.display = ''; // show the <img> element
+        // Optional: helps with some hosts that block hotlinking based on referrer
+        el.referrerPolicy = 'no-referrer';
+
+        el.hidden = false;
         el.src = url;
 
         el.onload = () => {
-          // ensure visible after load
-          el.style.display = '';
+          el.hidden = false;
         };
-
         el.onerror = () => {
           console.warn('Image failed to load:', url);
-          el.style.display = 'none';
-
-          // Optional: show a text fallback for the logo
-          if (id === 'biz_logo') {
-            const name = document.getElementById('biz_name');
-            if (name)
-              name.textContent = (name.textContent || '').replace('Loading business...', '').trim();
-          }
+          el.removeAttribute('src');
+          el.hidden = true;
         };
       }
 
