@@ -276,8 +276,19 @@ li::marker {
 }
 
 /* Optional: avoid broken image icons before JS fills them */
-#biz_logo,
+#biz_logo {
+  display: none;
+  max-width: 220px;
+  max-height: 70px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
 #offer_img {
   display: none;
+  width: 100%;
   max-width: 100%;
+  height: auto;
+  object-fit: cover;
 }
