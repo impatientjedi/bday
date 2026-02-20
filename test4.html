@@ -33,6 +33,18 @@
           linear-gradient(180deg, var(--bg1), var(--bg2));
       }
 
+      /* Fix iOS Safari “bullet dots” showing next to inputs */
+      ul, ol { list-style: none; margin: 0; padding: 0; }
+      li { list-style: none; }
+      
+      /* Some builders/themes inject bullets via ::marker */
+      li::marker { content: ""; }
+      
+      /* If any Jotform markup ends up in the same DOM (jsform mode), this helps too */
+      #form_area ul, #form_area ol, #form_area li { list-style: none !important; }
+      #form_area li::marker { content: "" !important; }
+
+
       /* Floating balloons layer behind content */
       .balloons{
         position: fixed;
