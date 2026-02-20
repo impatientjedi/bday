@@ -216,6 +216,7 @@
       
       async function loadBusiness(businessId) {
         const url = getBusinessJsonUrl(businessId);
+        console.log(url);
       
         // Fast + cache-friendly (S3/CloudFront should handle caching via Cache-Control)
         const res = await fetch(url, { method: "GET", mode: "cors", cache: "default" });
